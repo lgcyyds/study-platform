@@ -9,11 +9,12 @@
 			</swiper>
 		</view>
 		<!-- 点击签到按钮 -->
-		
+		<signBtn></signBtn>
 	</view>
 </template>
 
 <script setup>
+import signBtn from '@/compoments/sign-btn/sign-btn.vue'
 import { onLoad } from '@dcloudio/uni-app';
 import { ref } from 'vue';
 let banner = ref([
