@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import signBtn from '@/compoments/sign-btn/sign-btn.vue'
+import signBtn from '@/components/sign-btn/sign-btn.vue'
 import { onLoad } from '@dcloudio/uni-app';
 import { ref } from 'vue';
 let banner = ref([
