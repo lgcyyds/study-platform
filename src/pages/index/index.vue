@@ -10,6 +10,18 @@
 		</view>
 		<!-- 点击签到按钮 -->
 		<signBtn></signBtn>
+		<view class="block">
+			<view class="search_block">
+				<view class="search_btn">
+					搜索
+				</view>
+			</view>
+			<view class="article_block">
+				<view class="article_btn">
+					阅读
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -34,6 +46,36 @@ onLoad(() => {});
 		.banner-img {
 			width: 100%;
 			height: 100%;
+		}
+	}
+	.block{
+		width: 92%;
+		height: 150rpx;
+		margin: 40rpx auto;
+		display: flex;
+		justify-content: space-between;
+		.search_block,
+		.article_block{
+			width: 46%;
+			height: 100%;
+			border: black 1rpx solid;
+			border-radius: 15rpx;
+			position: relative;
+			.search_btn,
+			.article_btn{
+				position: absolute;
+				bottom: 20rpx;
+				right: 20rpx;
+				width: 100rpx;
+				height: 30rpx;
+				border: black 1rpx solid;
+				border-radius: 20px;
+				font-size: 20rpx;
+				line-height: 25rpx;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
 		}
 	}
 }
