@@ -1,11 +1,11 @@
 <template>
 	<!-- 签到 -->
-	<view class="sign">
+	<view class="sign" :style="{height:status,display:isSignIn}">
 		<!-- 签到按钮 -->
 		<view class="sign-btn" @click="signOn">
 			<!-- v-on：事件类型="触发后的函数" 事件绑定 -->
-			<view ref='signShadow' class="circle" :style="{transform: status}"></view>
-			<view ref='signInner' class="sign-inner" :style="{transform: status}">
+			<view ref='signShadow' class="circle"></view>
+			<view ref='signInner' class="sign-inner">
 				<view>立即签到</view>
 				<view class="time">00:00:00</view>
 			</view>
@@ -14,16 +14,24 @@
 </template>
 
 <script setup>
-import { getCurrentInstance } from 'vue';
+import { getCurrentInstance, onMounted } from 'vue';
 import { ref } from 'vue';
- let signWidth = ref()
- let status = ref()
+	let isSignInState = ref(false)//签到状态
+	let isSignIn = ref()//签到样式
+	//点击签到按钮
+	let status = ref('230rpx')
 	let signOn = ()=>{
 		setTimeout(function() {
-			status.value ='scale(0)'
+			status.value = '0rpx' 
 		}, 1000);
 		console.log(status.value)
 	}
+	onMounted(()=>{
+		//根据签到状态初始化签到按钮
+		if(isSignInState.value){
+			isSignIn.value = 'none'
+		}
+	})
 </script>
 
 <style lang="less">
@@ -40,20 +48,9 @@ import { ref } from 'vue';
 			transform: scale(1.1);
 		}
 	}
-	@keyframes hidden {
-		0% {
-			transform: scale(1.1);
-		}
-	
-		50% {
-			transform: scale(1.2);
-		}
-	
-		100% {
-			transform: scale(1.1);
-		}
-	}
 	.sign {
+		transition: all 1s;
+		overflow: hidden;
 		.sign-btn {
 			display: flex;
 			justify-content: center;
@@ -70,7 +67,6 @@ import { ref } from 'vue';
 				z-index: -1;
 				animation: myScale 2s infinite linear;
 				transition: all 1s;
-				overflow: hidden;
 			}
 			.sign-inner {
 				height: 160rpx;
