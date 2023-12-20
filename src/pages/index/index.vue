@@ -22,6 +22,9 @@
 				</view>
 			</view>
 		</view>
+		<view class="topic_title">
+			题库入口
+		</view>
 		<view class="topic">
 			<view class="topic-items" v-for="(item,index) in 10" :key="index">
 				<view class="topic-item">
@@ -96,6 +99,10 @@ onLoad(()=>{
 			// background: url(@/static/assets/glass2.jpeg) no-repeat;
 			background-size: cover;
 		}
+	}
+	.topic_title{
+		padding-left:15rpx;
+		padding-bottom:15rpx;
 	}
 	.topic{
 		width: 100%;
