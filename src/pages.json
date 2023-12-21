@@ -46,6 +46,14 @@
 				"navigationBarTitleText" : "注册",
 				"enablePullDownRefresh" : false
 			}
+		},
+		{
+			"path" : "pages/article/article",
+			"style" : 
+			{
+				"navigationBarTitleText" : "文章",
+				"enablePullDownRefresh" : false
+			}
 		}
 		// ,{
 		//     "path" : "pages/detail/detail",
@@ -127,7 +135,7 @@
 				"pagePath": "pages/message/message",
 				"text": "消息",
 				"iconPath": "static/assets/message.png",
-				"selectedIconPath": "static/assets/message.png"
+				"selectedIconPath": "static/assets/message_on.png"
 			},
 			{
 				"pagePath": "pages/my/my",
