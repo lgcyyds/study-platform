@@ -28,7 +28,7 @@
 				<view class="message-img">
 					<image src="../../static/logo.png" mode="aspectFill"></image>
 				</view>
-				<view class="dot"></view>
+				<view class="dot" v-show="true"></view>
 				<view class="message-content">
 					<view class="message-text">
 						<view class="message-title">

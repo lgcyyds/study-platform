@@ -39,6 +39,7 @@ import { ref } from 'vue';
 		position: fixed;
 		bottom: 0;
 		left: 0;
+		background-color: #ffffff;
 		.comment-container{
 			width: 100%;
 			height: 56rpx;

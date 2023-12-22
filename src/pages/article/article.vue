@@ -33,19 +33,23 @@
 		</view>
 		<!-- 文章主体 -->
 		<view class="article-body">
-			
+		  <Editor
+			style="height: 100%; width: 100%;"
+			v-model="valueHtml"
+			:defaultConfig="editorConfig"
+			mode="simple"
+			@onCreated="handleCreated"
+		  />
 		</view>
 		<!-- 日期和标签 -->
 		<view class="article-other">
-			<view class="article-tag">
-				
-			</view>
 			<view class="article-date">
-				
+				—— 发表于2000年12月12日 12:12 ——
 			</view>
 		</view>
 		<!-- 全部评论 -->
 		<view class="article-comment">
+			<commentList/>
 		</view>
 		<!-- 评论组件 -->
 		<comment></comment>
@@ -54,6 +58,40 @@
 
 <script setup>
 import comment from '@/components/comment/comment.vue'
+import commentList from '@/components/commentList/commentList.vue'
+import '@wangeditor/editor/dist/css/style.css' // 引入 css
+
+import { onBeforeUnmount, ref, shallowRef, onMounted } from 'vue'
+import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
+
+ // 编辑器实例，必须用 shallowRef
+    const editorRef = shallowRef()
+    // 内容 HTML
+    const valueHtml = ref('')
+
+    // 模拟 ajax 异步获取内容
+    onMounted(() => {
+        setTimeout(() => {
+            valueHtml.value = 
+			'<p>模拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax</p>'
+        }, 1000)
+    })
+
+    const toolbarConfig = {}
+    const editorConfig = { 
+		readOnly:true
+	}
+
+    // 组件销毁时，也及时销毁编辑器
+    onBeforeUnmount(() => {
+        const editor = editorRef.value
+        if (editor == null) return
+        editor.destroy()
+    })
+
+    const handleCreated = (editor) => {
+      editorRef.value = editor // 记录 editor 实例，重要！
+    }
 </script>
 
 <style lang="less">
@@ -132,8 +170,22 @@ import comment from '@/components/comment/comment.vue'
 			}
 		}
 	}
+	.article-other{
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		.article-date{
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			align-content: center;
+			font-size: 25rpx;
+			color: #8c8c8c;
+			margin: 20rpx 0;
+		}
+	}
 	.article-comment{
-		margin-bottom: 90rpx;
+		padding-bottom: 120rpx;
 	}
 }
 </style>
