@@ -10,27 +10,21 @@
 		</view>
 		<!-- 点击签到按钮 -->
 		<signBtn></signBtn>
-		<view class="block">
-			<view class="search_block">
-				<view class="search_btn">
-					搜索
-				</view>
-			</view>
-			<view class="article_block">
-				<view class="article_btn">
-					阅读
-				</view>
+		<view class="block" @click="goSearch">
+			<image src="../../static/assets/search.png" mode=""></image>
+			<view class="text">
+				请输入搜索词...
 			</view>
 		</view>
 		<view class="topic_title">
 			题库入口
 		</view>
 		<view class="topic">
-			<view class="topic-items" v-for="(item,index) in 10" :key="index">
+			<view class="topic-items" v-for="(item,index) in icon" :key="index">
 				<view class="topic-item">
-					<image src="../../static/logo.png" mode="aspectFill"></image>
+					<image :src="`../../static/assets/homeIcon/${item.url}.png`" mode="aspectFill"></image>
 					<view class="title">
-						测试
+						{{item.title}}
 					</view>
 				</view>
 			</view>
@@ -50,6 +44,27 @@ let banner = ref([
 		url: 'https://img0.baidu.com/it/u=1032314795,3433105171&fm=253&fmt=auto&app=138&f=JPEG?w=889&h=500'
 	}
 ]);
+let icon = ref([
+	{url: 'all',type:1,title:'全部'},
+	{url: 'select',type:2,title:'选择题'},
+	{url: 'javascript',type:3,title:'JavaScript'},
+	{url: 'css',type:4,title:'css'},
+	{url: 'html',type:5,title:'HTML'},
+	{url: 'react',type:6,title:'React'},
+	{url: 'vue',type:7,title:'Vue'},
+	{url: 'computer',type:8,title:'计算机网络'},
+	{url: 'nodejs',type:9,title:'NodeJS'},
+	{url: 'typescript',type:10,title:'TypeScript'},
+	{url: 'optimize',type:11,title:'性能优化'},
+	{url: 'js_es6',type:12,title:'ES6'},
+	{url: 'Wall',type:13,title:'工程化'},
+	{url: 'git',type:14,title:'Git'},
+])
+let goSearch=()=>{
+	uni.navigateTo({
+		url:'/pages/search/search'
+	})
+}
 onLoad(()=>{
 
 })
@@ -64,40 +79,24 @@ onLoad(()=>{
 		}
 	}
 	.block{
-		width: 92%;
-		height: 150rpx;
+		width: 80%;
+		height: 70rpx;
+		border: 4rpx solid #d8d8d8;
+		border-radius: 5px;
 		margin: 30rpx auto;
 		display: flex;
-		justify-content: space-between;
-		.search_block,
-		.article_block{
-			width: 46%;
-			height: 100%;
-			border-radius: 15rpx;
-			position: relative;
-			.search_btn,
-			.article_btn{
-				position: absolute;
-				bottom: 20rpx;
-				right: 20rpx;
-				width: 100rpx;
-				height: 30rpx;
-				border: black 1rpx solid;
-				border-radius: 20px;
-				font-size: 20rpx;
-				line-height: 25rpx;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-			}
+		justify-content: center;
+		border-radius: 15rpx;
+		image{
+			width: 50rpx;
+			height: 50rpx;
+			margin-top: 8rpx;
 		}
-		.search_block{
-			// background: url(@/static/assets/glass.jpeg) no-repeat;
-			background-size: cover;
-		}
-		.article_block{
-			// background: url(@/static/assets/glass2.jpeg) no-repeat;
-			background-size: cover;
+		.text{
+			height: 70rpx;
+			line-height: 70rpx;
+			color: #b8b8b8;
+			
 		}
 	}
 	.topic_title{
@@ -140,6 +139,7 @@ onLoad(()=>{
 					justify-content: center;
 					align-items: center;
 					font-size: 10rpx;
+					white-space: nowrap;
 				}
 			}
 		}

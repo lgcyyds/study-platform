@@ -54,6 +54,14 @@
 				"navigationBarTitleText" : "文章",
 				"enablePullDownRefresh" : false
 			}
+		},
+		{
+			"path" : "pages/search/search",
+			"style" : 
+			{
+				"navigationBarTitleText" : "搜索",
+				"enablePullDownRefresh" : false
+			}
 		}
 		// ,{
 		//     "path" : "pages/detail/detail",
