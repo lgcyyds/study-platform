@@ -34,7 +34,7 @@ import { computed, ref } from 'vue';
 		return keyword.value !==''
 	})
 	
-	let active = ref(2)
+	let active = ref(1)
 </script>
 
 <style lang="less" scoped>
