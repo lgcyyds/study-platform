@@ -24,7 +24,7 @@
 						</view>
 					</view>
 					<view class="tags_right">
-						<van-button plain type="primary" color="#20b427" round size="mini">练习</van-button>
+						<van-button plain type="primary" color="#20b427" round size="mini" @click="goTopicExercise()">练习</van-button>
 					</view>
 				</view>
 			</view>
@@ -33,7 +33,11 @@
 </template>
 
 <script setup>
-
+const goTopicExercise = ()=>{
+	uni.navigateTo({
+		url:'/pages/topicExercise/topicExercise'
+	})
+}
 </script>
 
 <style lang="less" scoped>

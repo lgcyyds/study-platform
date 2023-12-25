@@ -70,6 +70,14 @@
 				"navigationBarTitleText" : "题目",
 				"enablePullDownRefresh" : false
 			}
+		},
+		{
+			"path" : "pages/topicExercise/topicExercise",
+			"style" : 
+			{
+				"navigationBarTitleText" : "题目练习",
+				"enablePullDownRefresh" : false
+			}
 		}
 		// ,{
 		//     "path" : "pages/detail/detail",
