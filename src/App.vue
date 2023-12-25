@@ -14,4 +14,6 @@ export default {
 
 <style>
 /*每个页面公共css */
+/*隐藏滑动条*/
+::-webkit-scrollbar{width:0!important;height:0!important;}
 </style>

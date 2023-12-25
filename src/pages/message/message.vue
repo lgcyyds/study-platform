@@ -52,7 +52,7 @@
 
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .message{
 	.message-tip{
 		width: 100%;
@@ -84,7 +84,7 @@
 					display: flex;
 					justify-content: center;
 					align-items: center;
-					font-size: 10rpx;
+					font-size: 25rpx;
 					background-color: #ff3e03;
 					width: 33rpx;
 					height: 33rpx;
@@ -161,7 +161,7 @@
 			.message-time{
 				height: 100%;
 				width: 150rpx;
-				font-size: 10rpx;
+				font-size: 24rpx;
 				text-align: center;
 				margin-top: 40rpx;
 			}

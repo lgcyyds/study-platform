@@ -10,7 +10,7 @@
 		</view>
 		<!-- 点击签到按钮 -->
 		<signBtn></signBtn>
-		<view class="block" @click="goSearch">
+		<view class="search_block" @click="goSearch">
 			<image src="../../static/assets/search.png" mode=""></image>
 			<view class="text">
 				请输入搜索词...
@@ -46,19 +46,18 @@ let banner = ref([
 ]);
 let icon = ref([
 	{url: 'all',type:1,title:'全部'},
-	{url: 'select',type:2,title:'选择题'},
-	{url: 'javascript',type:3,title:'JavaScript'},
-	{url: 'css',type:4,title:'css'},
-	{url: 'html',type:5,title:'HTML'},
-	{url: 'react',type:6,title:'React'},
-	{url: 'vue',type:7,title:'Vue'},
-	{url: 'computer',type:8,title:'计算机网络'},
-	{url: 'nodejs',type:9,title:'NodeJS'},
-	{url: 'typescript',type:10,title:'TypeScript'},
-	{url: 'optimize',type:11,title:'性能优化'},
-	{url: 'js_es6',type:12,title:'ES6'},
-	{url: 'Wall',type:13,title:'工程化'},
-	{url: 'git',type:14,title:'Git'},
+	{url: 'javascript',type:2,title:'JavaScript'},
+	{url: 'css',type:3,title:'css'},
+	{url: 'html',type:4,title:'HTML'},
+	{url: 'react',type:5,title:'React'},
+	{url: 'vue',type:6,title:'Vue'},
+	{url: 'computer',type:7,title:'计算机网络'},
+	{url: 'nodejs',type:8,title:'NodeJS'},
+	{url: 'typescript',type:9,title:'TypeScript'},
+	{url: 'optimize',type:10,title:'性能优化'},
+	{url: 'js_es6',type:11,title:'ES6'},
+	{url: 'Wall',type:12,title:'工程化'},
+	{url: 'git',type:13,title:'Git'},
 ])
 let goSearch=()=>{
 	uni.navigateTo({
@@ -70,7 +69,7 @@ onLoad(()=>{
 })
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .content {
 	.banner {
 		.banner-img {
@@ -78,7 +77,7 @@ onLoad(()=>{
 			height: 100%;
 		}
 	}
-	.block{
+	.search_block{
 		width: 80%;
 		height: 70rpx;
 		border: 4rpx solid #d8d8d8;
@@ -138,7 +137,7 @@ onLoad(()=>{
 					display: flex;
 					justify-content: center;
 					align-items: center;
-					font-size: 10rpx;
+					font-size: 25rpx;
 					white-space: nowrap;
 				}
 			}

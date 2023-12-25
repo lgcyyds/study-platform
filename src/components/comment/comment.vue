@@ -32,7 +32,7 @@ import { ref } from 'vue';
 	}
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 	.comment-block{
 		width: 100vw;
 		height: 90rpx;

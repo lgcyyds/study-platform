@@ -17,7 +17,7 @@
 	const active = ref(0);
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .article_container{
 	width: 92%;
 	height: 100%;

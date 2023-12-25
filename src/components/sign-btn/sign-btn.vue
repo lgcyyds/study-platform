@@ -34,7 +34,7 @@ import { ref } from 'vue';
 	})
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 	@keyframes myScale {
 		0% {
 			transform: scale(1.1);

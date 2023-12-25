@@ -94,7 +94,7 @@ import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
     }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .article-container{
 	width: 93%;
 	height: 100%;
