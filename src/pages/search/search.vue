@@ -25,7 +25,7 @@
 <script setup>
 import articleList from '@/components/articleList/articleList.vue'
 import questionList from '@/components/questionList/questionList.vue'
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 	let keyword = ref('')
 	let clearIcon=()=> {
             keyword.value = '';
@@ -35,6 +35,12 @@ import { computed, ref } from 'vue';
 	})
 	
 	let active = ref(1)
+	
+	onMounted(()=>{
+		// const page = this.$mp.page
+		// const title = page.$refs.title;
+		console.log(11)
+	})
 </script>
 
 <style lang="less" scoped>

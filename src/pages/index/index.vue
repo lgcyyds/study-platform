@@ -20,7 +20,7 @@
 			题库入口
 		</view>
 		<view class="topic">
-			<view class="topic-items" v-for="(item,index) in icon" :key="index" @click="goTopicPage(item.type)">
+			<view class="topic-items" v-for="(item,index) in icon" :key="index" @click="goTopicPage(item)">
 				<view class="topic-item">
 					<image :src="`../../static/assets/homeIcon/${item.url}.png`" mode="aspectFill"></image>
 					<view class="title">
@@ -59,9 +59,9 @@ let icon = ref([
 	{url: 'Wall',type:12,title:'工程化'},
 	{url: 'git',type:13,title:'Git'},
 ])
-let goTopicPage=(id)=>{
+let goTopicPage=(item)=>{
 	uni.navigateTo({
-		url:`/pages/topic/topic?topicId=${id}`
+		url:`/pages/topic/topic?id=${item.type}&title=${item.title}`
 	})
 }
 let goSearch=()=>{
@@ -70,7 +70,7 @@ let goSearch=()=>{
 	})
 }
 onLoad(()=>{
-
+	console.log(1212)
 })
 </script>
 

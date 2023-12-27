@@ -12,16 +12,22 @@
 </template>
 
 <script setup>
-	import { ref } from 'vue';
+	import { onMounted, ref } from 'vue';
 	import articleList from '@/components/articleList/articleList.vue'
+	// import { options } from 'less';
+	import { onLoad } from '@dcloudio/uni-app';
 	const active = ref(0);
+
 </script>
 
 <style lang="less" scoped>
 .article_container{
 	width: 92%;
-	height: 100%;
+	height: 1055rpx;
 	overflow-y: scroll;
 	margin: 0 auto;
+}
+/deep/ .van-tabs__line {
+    background: #20b427;
 }
 </style>

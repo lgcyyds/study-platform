@@ -67,7 +67,7 @@
 			"path" : "pages/topic/topic",
 			"style" : 
 			{
-				"navigationBarTitleText" : "题目",
+				"navigationBarTitleText" : "",
 				"enablePullDownRefresh" : false
 			}
 		},
@@ -78,60 +78,15 @@
 				"navigationBarTitleText" : "题目练习",
 				"enablePullDownRefresh" : false
 			}
+		},
+		{
+			"path" : "pages/myActive/myActive",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"enablePullDownRefresh" : false
+			}
 		}
-		// ,{
-		//     "path" : "pages/detail/detail",
-		//     "style" :                                                                                    
-		//     {
-		//         "navigationBarTitleText": "知识点",
-		//         "enablePullDownRefresh": false
-		//     }
-		    
-		// },{
-		//     "path" : "pages/topic/topic",
-		//     "style" :                                                                                    
-		//     {
-		//         "navigationBarTitleText": "题目列表",
-		//         "enablePullDownRefresh": false
-		//     }
-		    
-		// }
-		// ,{
-		//     "path" : "pages/search/search",
-		//     "style" :                                                                                    
-		//     {
-		//         "navigationBarTitleText": "搜索",
-		//         "enablePullDownRefresh": false
-		//     }
-		    
-		// }
-		// ,{
-		//     "path" : "pages/register/register",
-		//     "style" :                                                                                    
-		//     {
-		//         "navigationBarTitleText": "注册",
-		//         "enablePullDownRefresh": false
-		//     }
-		    
-		// }
-		// ,{
-		//     "path" : "pages/login/login",
-		//     "style" :                                                                                    
-		//     {
-		//         "navigationBarTitleText": "登录",
-		//         "enablePullDownRefresh": false
-		//     }
-		    
-		// }
-		// ,{
-		//     "path" : "pages/collect/collect",
-		//     "style" :                                                                                    
-		//     {
-		//         "navigationBarTitleText": "收藏",
-		//         "enablePullDownRefresh": false
-		//     }
-		    
-		// }
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
