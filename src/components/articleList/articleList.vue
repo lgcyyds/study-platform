@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<view class="article" v-for="item in 7" @click="goArticle">
+		<view class="article" v-for="(item,index) in 7" :key="index" @click="goArticle">
 			<image class="article_img" src="https://img1.baidu.com/it/u=507850114,3105556430&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500" mode="aspectFill"></image>
 			<view class="article_title">标题不能超过15个字</view>
 			<view class="article_content">内容两行显示，第二行满了用省略号表示,内容两行显示，第二行满了用省略号表示,内容两行显示，第二行满了用省略号表示</view>

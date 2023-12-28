@@ -37,9 +37,6 @@ import { computed, onMounted, ref } from 'vue';
 	let active = ref(1)
 	
 	onMounted(()=>{
-		// const page = this.$mp.page
-		// const title = page.$refs.title;
-		console.log(11)
 	})
 </script>
 

@@ -70,7 +70,7 @@ let goSearch=()=>{
 	})
 }
 onLoad(()=>{
-	console.log(1212)
+
 })
 </script>
 
@@ -97,6 +97,7 @@ onLoad(()=>{
 			margin-top: 8rpx;
 		}
 		.text{
+			font-size: 32rpx;
 			height: 70rpx;
 			line-height: 70rpx;
 			color: #b8b8b8;

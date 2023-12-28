@@ -14,6 +14,7 @@ export default {
 
 <style>
 /*每个页面公共css */
+@import "./wxcomponents/dist/common/index.wxss";
 /*隐藏滑动条*/
 ::-webkit-scrollbar{width:0!important;height:0!important;}
 body{

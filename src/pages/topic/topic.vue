@@ -30,7 +30,7 @@ onLoad((options) => {
 
 <style lang="less" scoped>
 .topic {
-	width: 90%;
+	width: 93%;
 	height: 100%;
 	margin: 0 auto;
 	.topic_content {

@@ -5,6 +5,9 @@
 			<view class="title">
 				单选题
 			</view>
+			<view class="collect_img">
+				<image @click="clickCollect" class="collect" :src="`../../static/assets/clickCollect${isCollected?'_on':''}.png`" mode="aspectFill"></image>
+			</view>
 			<view class="topic_index">
 				<text>1</text>/150
 			</view>
@@ -36,7 +39,11 @@
 </template>
 
 <script setup>
-
+import { ref } from 'vue';
+let isCollected = ref(false)
+const clickCollect = () =>{
+	isCollected.value = true
+}
 </script>
 
 <style lang="less">
@@ -47,12 +54,12 @@ body{
 	width: 90%;
 	height: 100%;
 	margin: 0 auto;
-	overflow: hidden;
 	.topic_title{
 		width: 100%;
 		height: 60rpx;
 		border-radius: 5px;
-		background-color: #f3f3f3;
+		// background-color: #f3f3f3;
+		box-shadow: 2rpx 2rpx 4rpx rgba(0, 0, 0, 0.3);
 		margin-top: 20rpx;
 		display: flex;
 		align-items: center;
@@ -64,7 +71,15 @@ body{
 		.title{
 			line-height: 60rpx;
 			margin-left: 20rpx;
+		}
+		.collect_img{
 			flex: 1;
+			.collect{
+				padding-left: 20rpx;
+				margin-top: 5rpx;
+				width: 40rpx;
+				height: 35rpx;
+			}
 		}
 		.topic_index{
 			color: #b4b4b4;
@@ -78,8 +93,9 @@ body{
 		width: 100%;
 		height: auto;
 		border-radius: 5px;
-		background-color: #f3f3f3;
-		margin-top: 20rpx;
+		// background-color: #f3f3f3;
+		box-shadow: 2rpx 2rpx 6rpx rgba(0, 0, 0, 0.3);
+		margin: 20rpx 0;
 		display: flex;
 		padding: 30rpx 0;
 		.topic_details{
@@ -89,7 +105,7 @@ body{
 			.topic_option{
 				width: 100%;
 				min-height: 80rpx;
-				background-color: #e1e1e1;
+				background-color: #f1f1f1;
 				border-radius: 5px;
 				margin-top: 20rpx;
 				display: flex;

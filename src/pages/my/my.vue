@@ -39,7 +39,7 @@
 				</li>
 				<li class="section-li">
 					<image class="icon-li" src="../../static/assets/comment.png" mode="aspectFill"></image>
-					<view class="text">我的评论</view>
+					<view class="text">阅读历史</view>
 					<image class="icon-arrow" src="../../static/assets/triangle-right-fill.png" mode="aspectFill"></image>
 				</li>
 				<li class="section-li">
@@ -56,13 +56,15 @@
 import { onMounted } from 'vue';
 const goPage=(e)=>{
 	let pageName = e.target.innerText
-	if(pageName == '我的点赞' || pageName == '我的评论'){
+	if(pageName == '我的点赞'){
 		uni.navigateTo({
 			url:`/pages/myActive/myActive?title=${pageName}`
 		})
 	}else if (pageName == '个人资料'){
 		
 	}else if(pageName == '退出登录'){
+		
+	}else if(pageName == '阅读历史'){
 		
 	}
 }
