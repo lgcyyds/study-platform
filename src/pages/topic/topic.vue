@@ -1,7 +1,7 @@
 <template>
 	<view class="topic">
 		<van-dropdown-menu>
-			<van-dropdown-item v-model="value1" :options="optionList" />
+			<van-dropdown-item :value="value1" :options="optionList" />
 		</van-dropdown-menu>
 		<view class="topic_content">
 			<questionList></questionList>

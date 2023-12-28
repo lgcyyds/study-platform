@@ -59,10 +59,10 @@
 <script setup>
 import comment from '@/components/comment/comment.vue'
 import commentList from '@/components/commentList/commentList.vue'
-import '@wangeditor/editor/dist/css/style.css' // 引入 css
+// import '@wangeditor/editor/dist/css/style.css' // 引入 css
 
 import { onBeforeUnmount, ref, shallowRef, onMounted } from 'vue'
-import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
+// import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 
  // 编辑器实例，必须用 shallowRef
     const editorRef = shallowRef()
