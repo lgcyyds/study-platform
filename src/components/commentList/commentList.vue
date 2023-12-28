@@ -4,7 +4,7 @@
 			<p>全部评论</p>
 		</view>
 		<view class="comment-items">
-			<view class="comment-item" v-for="(item,index) in 6">
+			<view class="comment-item" v-for="(item,index) in 6" :key="index">
 				<view class="img">
 					<image src="../../static/logo.png" mode="aspectFill"></image>
 				</view>

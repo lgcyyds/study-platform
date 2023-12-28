@@ -1,6 +1,6 @@
 <template>
 	<view class="question_container">
-		<view class="question_item" v-for="item in 6">
+		<view class="question_item" v-for="(item,index) in 6" :key="index">
 			<view class="question_left">
 				<view class="title">
 					<view class="dot"></view>
@@ -11,7 +11,7 @@
 				<view class="difficulty">
 					<view class="text">难度:</view>
 					<view class="star">
-						<image v-for="item in 5" src="../../static/assets/star.png" mode="aspectFill"></image>
+						<image v-for="(item,index) in 5" :key="index" src="../../static/assets/star.png" mode="aspectFill"></image>
 					</view>
 				</view>
 				<view class="tags">
@@ -19,7 +19,7 @@
 						<view class="text">
 							标签：
 						</view>
-						<view class="tag" v-for="item in 3">
+						<view class="tag" v-for="(item,index) in 3" :key="index">
 							Vue
 						</view>
 					</view>
