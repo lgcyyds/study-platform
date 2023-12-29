@@ -1,6 +1,6 @@
 <template>
 	<view class="active_container">
-		<van-tabs v-if="true" v-model:active="active">
+		<van-tabs v-if="true" v-model:active="active" sticky>
 			<view class="artAndTopic_collect">
 				<van-tab title="文章收藏">
 					<articleList></articleList>
@@ -32,10 +32,11 @@ onLoad((options)=>{
 })
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .active_container {
 	width: 100%;
-	height: 100%;
+	height:100vh;
+	overflow: hidden;
 	.artAndTopic_collect{
 		width: 93%;
 		height: 1155rpx;

@@ -17,6 +17,7 @@ export default {
 @import "./wxcomponents/dist/common/index.wxss";
 /*隐藏滑动条*/
 ::-webkit-scrollbar{width:0!important;height:0!important;}
+
 body{
 	/* background-color: #f8f8f8; */
 }

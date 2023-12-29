@@ -46,7 +46,7 @@ const clickCollect = () =>{
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 body{
 	// background-color: #f8f8f8;
 }

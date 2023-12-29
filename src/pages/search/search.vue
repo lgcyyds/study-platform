@@ -10,11 +10,11 @@
 			</view>
 		</view>
 		<view class="search-content">
-			<van-tabs v-model="active">
-				<van-tab class="search_result" title="文章">
+			<van-tabs :active="active" sticky offset-top='58'>
+				<van-tab title="文章">
 					<articleList></articleList>
 				</van-tab>
-				<van-tab class="search_result" title="题目">
+				<van-tab title="题目">
 					<questionList></questionList>
 				</van-tab>
 			</van-tabs>
@@ -26,6 +26,7 @@
 import articleList from '@/components/articleList/articleList.vue'
 import questionList from '@/components/questionList/questionList.vue'
 import { computed, onMounted, ref } from 'vue';
+	let active = ref(0)
 	let keyword = ref('')
 	let clearIcon=()=> {
             keyword.value = '';
@@ -34,7 +35,6 @@ import { computed, onMounted, ref } from 'vue';
 		return keyword.value !==''
 	})
 	
-	let active = ref(1)
 	
 	onMounted(()=>{
 	})
@@ -43,7 +43,7 @@ import { computed, onMounted, ref } from 'vue';
 <style lang="less" scoped>
 .search_box{
 	width: 100%;
-	height: calc(100vh - 100rpx);
+	height: 100vh;
 	overflow: hidden;
 	.search_block{
 		width: 90%;
@@ -84,17 +84,13 @@ import { computed, onMounted, ref } from 'vue';
 	}
 	.search-content{
 		width: 90%;
-		height: 1240rpx;
-		overflow: hidden;
+		height: 1112rpx;
+		overflow-y: scroll;
 		margin: 0 auto;
-		.search_result{
-			width: 100%;
-			height: 1030rpx;
-			overflow-y: scroll;
-		}
 	}
 }
 /deep/ .van-tabs__line {
     background: #20b427;
+	
 }
 </style>

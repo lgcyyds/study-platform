@@ -29,22 +29,22 @@
 			<ul class="section-ul" @click="goPage($event)">
 				<li class="section-li">
 					<image class="icon-li" src="../../static/assets/customer-center.png" mode="aspectFill"></image>
-					<view class="text">个人资料</view>
+					<view class="text" id="userInfo">个人资料</view>
 					<image class="icon-arrow" src="../../static/assets/triangle-right-fill.png" mode="aspectFill"></image>
 				</li>
 				<li class="section-li">
 					<image class="icon-li" src="../../static/assets/good-like.png" mode="aspectFill"></image>
-					<view class="text">我的点赞</view>
+					<view class="text" id="userLike">我的点赞</view>
 					<image class="icon-arrow" src="../../static/assets/triangle-right-fill.png" mode="aspectFill"></image>
 				</li>
 				<li class="section-li">
 					<image class="icon-li" src="../../static/assets/comment.png" mode="aspectFill"></image>
-					<view class="text">阅读历史</view>
+					<view class="text" id="readHistory">阅读历史</view>
 					<image class="icon-arrow" src="../../static/assets/triangle-right-fill.png" mode="aspectFill"></image>
 				</li>
 				<li class="section-li">
 					<image class="icon-li" src="../../static/assets/exit.png" mode="aspectFill"></image>
-					<view class="text">退出登录</view>
+					<view class="text" id="loginout">退出登录</view>
 					<image class="icon-arrow" src="../../static/assets/triangle-right-fill.png" mode="aspectFill"></image>
 				</li>
 			</ul>
@@ -55,16 +55,18 @@
 <script setup>
 import { onMounted } from 'vue';
 const goPage=(e)=>{
-	let pageName = e.target.innerText
-	if(pageName == '我的点赞'){
+	let pageName = e.target.innerText;
+	let id = e.target.id;
+	console.log(pageName,id);
+	if(pageName == '我的点赞' || id == 'userLike'){
 		uni.navigateTo({
-			url:`/pages/myActive/myActive?title=${pageName}`
+			url:`/pages/myActive/myActive?title=我的点赞`
 		})
-	}else if (pageName == '个人资料'){
+	}else if (pageName == '个人资料' || id == 'userInfo'){
 		
-	}else if(pageName == '退出登录'){
+	}else if(pageName == '退出登录' || id == 'loginout'){
 		
-	}else if(pageName == '阅读历史'){
+	}else if(pageName == '阅读历史' || id == 'readHistory'){
 		
 	}
 }
