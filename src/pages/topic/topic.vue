@@ -36,7 +36,7 @@ onLoad((options) => {
 	margin: 0 auto;
 	.topic_content {
 		width: 100%;
-		height: 1120rpx;
+		height: calc(100vh - 150rpx);
 		overflow-y: scroll;
 	}
 }

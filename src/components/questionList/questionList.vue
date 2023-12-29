@@ -1,6 +1,6 @@
 <template>
 	<view class="question_container">
-		<view class="question_item" v-for="(item,index) in 6" :key="index">
+		<view class="question_item" v-for="(item,index) in 8" :key="index">
 			<view class="question_left">
 				<view class="title">
 					<view class="dot"></view>

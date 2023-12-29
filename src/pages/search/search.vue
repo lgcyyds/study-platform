@@ -10,7 +10,7 @@
 			</view>
 		</view>
 		<view class="search-content">
-			<van-tabs :active="active" sticky offset-top='58'>
+			<van-tabs :active="active" sticky offset-top='54'>
 				<van-tab title="文章">
 					<articleList></articleList>
 				</van-tab>

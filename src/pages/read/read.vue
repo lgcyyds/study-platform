@@ -23,7 +23,7 @@
 <style lang="less" scoped>
 .article_container{
 	width: 92%;
-	height: 1050rpx;
+	height: calc(100vh - 100rpx);
 	overflow-y: scroll;
 	margin: 0 auto;
 }
