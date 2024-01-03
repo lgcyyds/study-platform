@@ -14,10 +14,16 @@ export default {
 
 <style>
 /*每个页面公共css */
-@import "./wxcomponents/dist/common/index.wxss";
+/* @import "./wxcomponents/dist/common/index.wxss"; */
 /*隐藏滑动条*/
-::-webkit-scrollbar{width:0!important;height:0!important;}
-
+::-webkit-scrollbar {
+	display: none;
+	width: 0 !important;
+	height: 0 !important;
+	-webkit-appearance: none;
+	background: transparent;
+	color: transparent;
+  }
 body{
 	/* background-color: #f8f8f8; */
 }

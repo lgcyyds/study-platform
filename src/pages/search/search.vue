@@ -1,6 +1,6 @@
 <template>
 	<view class="search_box">
-		<view class="search_block" >
+		<view class="search_block">
 			<image src="../../static/assets/search.png" mode=""></image>
 			<view class="text">
 				<input class="uni-input" type="text" v-model="keyword" placeholder="请输入搜索词..."/>
@@ -10,7 +10,7 @@
 			</view>
 		</view>
 		<view class="search-content">
-			<van-tabs :active="active" sticky offset-top='54'>
+			<van-tabs :active="active" sticky>
 				<van-tab title="文章">
 					<articleList></articleList>
 				</van-tab>
@@ -43,8 +43,8 @@ import { computed, onMounted, ref } from 'vue';
 <style lang="less" scoped>
 .search_box{
 	width: 100%;
-	height: 100vh;
-	overflow: hidden;
+	height: auto;
+	overflow-y: scroll;
 	.search_block{
 		width: 90%;
 		height: 70rpx;
@@ -84,8 +84,8 @@ import { computed, onMounted, ref } from 'vue';
 	}
 	.search-content{
 		width: 90%;
-		height: 1112rpx;
-		overflow-y: scroll;
+		height: 100%;
+		// overflow-y: scroll;
 		margin: 0 auto;
 	}
 }
