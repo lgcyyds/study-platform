@@ -7,7 +7,7 @@
 					写评论...
 				</p>
 			</view>
-			<image v-if="true" @click="changeBtn" class="icon" src="../../static/assets/commentErea.png" mode="aspectFill"></image>
+			<image v-if="btnType" @click="changeBtn" class="icon" src="../../static/assets/commentErea.png" mode="aspectFill"></image>
 			<image v-else @click="changeBtn" class="icon" src="../../static/assets/top.png" mode="aspectFill"></image>
 			<image @click="changeCollect" class="icon" :src="`../../static/assets/clickCollect${isCollect?'':'_on'}.png`" mode="aspectFill"></image>22
 			<image @click="changeLike" class="icon" :src="`../../static/assets/clickLike${isLike?'':'_on'}.png`" mode="aspectFill"></image>12
@@ -27,15 +27,23 @@ import { ref } from 'vue';
 		// 点赞和取消点赞
 		isLike.value = false
 	}
+	let btnType = ref(true)//true是评论区  false是文章
+	const emit = defineEmits(['toComment','toArticle'])
 	let changeBtn=()=>{
-		
+		if(btnType.value){
+			btnType.value = false
+			emit('toComment')
+		}else{
+			btnType.value = true
+			emit('toArticle')
+		}
 	}
 </script>
 
 <style lang="less" scoped>
 	.comment-block{
 		width: 100vw;
-		height: 90rpx;
+		height: 100rpx;
 		position: fixed;
 		bottom: 0;
 		left: 0;

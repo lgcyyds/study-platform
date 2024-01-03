@@ -24,7 +24,6 @@ import { ref } from 'vue';
 		setTimeout(function() {
 			status.value = '0rpx' 
 		}, 1000);
-		console.log(status.value)
 	}
 	onMounted(()=>{
 		//根据签到状态初始化签到按钮

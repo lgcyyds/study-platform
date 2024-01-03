@@ -1,103 +1,90 @@
 <template>
-	<view class="article-container">
-		<view class="article-info">
-			<view class="article-title">
-				不能超过32个字不能超过32个字不能超过32个字不能超过32个字
-			</view>
-			<view class="article-author-info">
-				<view class="article-author-items">
-					<view class="article-author-img">
-						<image src="../../static/logo.png" mode="aspectFill"></image>
-					</view>
-					<view class="article-author-content">
-						<view class="article-author-text">
-							<view class="article-author-title">
-								用户名
-							</view>
-							<view class="article-author-action">
-								<image class="sign-icon" src="../../static/assets/signup1.png" mode="aspectFill"></image>
-								<view class="day">
-									签到23天
-								</view>
-								<image class="view-icon" src="../../static/assets/view.png" mode="aspectFill"></image>
-								<view class="day">
-									23
-								</view>
-								
-							</view>
-							
+	<scroll-view scroll-y="true" show-scrollbar="false" :scroll-into-view="location" @scroll="locationChange" scroll-with-animation="true">
+		<view class="article-container">
+			<view class="article-info" id="article">
+				<view class="article-title">
+					不能超过32个字不能超过32个字不能超过32个字不能超过32个字
+				</view>
+				<view class="article-author-info">
+					<view class="article-author-items">
+						<view class="article-author-img">
+							<image src="../../static/logo.png" mode="aspectFill"></image>
 						</view>
-					</view>				
+						<view class="article-author-content">
+							<view class="article-author-text">
+								<view class="article-author-title">
+									用户名
+								</view>
+								<view class="article-author-action">
+									<image class="sign-icon" src="../../static/assets/signup1.png" mode="aspectFill"></image>
+									<view class="day">
+										签到23天
+									</view>
+									<image class="view-icon" src="../../static/assets/view.png" mode="aspectFill"></image>
+									<view class="day">
+										23
+									</view>
+								</view>
+							</view>
+						</view>				
+					</view>
 				</view>
 			</view>
-		</view>
-		<!-- 文章主体 -->
-		<view class="article-body">
-		  <Editor
-			style="height: 100%; width: 100%;"
-			v-model="valueHtml"
-			:defaultConfig="editorConfig"
-			mode="simple"
-			@onCreated="handleCreated"
-		  />
-		</view>
-		<!-- 日期和标签 -->
-		<view class="article-other">
-			<view class="article-date">
-				—— 发表于2000年12月12日 12:12 ——
+			<!-- 文章主体 -->
+			<view class="article-body">
+			  <rich-text :nodes="valueHtml"></rich-text>
 			</view>
+			<!-- 日期和标签 -->
+			<view class="article-other">
+				<view class="article-date">
+					—— 发表于2000年12月12日 12:12 ——
+				</view>
+			</view>
+			<!-- 全部评论 -->
+			<view class="article-comment" id="allComment">
+				<commentList/>
+			</view>
+			<!-- 评论组件 -->
 		</view>
-		<!-- 全部评论 -->
-		<view class="article-comment">
-			<commentList/>
-		</view>
-		<!-- 评论组件 -->
-		<comment></comment>
-	</view>
+	</scroll-view>
+	<comment @toComment="goComment" @toArticle="goArticle"></comment>
+	
 </template>
 
 <script setup>
 import comment from '@/components/comment/comment.vue'
 import commentList from '@/components/commentList/commentList.vue'
-// import '@wangeditor/editor/dist/css/style.css' // 引入 css
-
-import { onBeforeUnmount, ref, shallowRef, onMounted } from 'vue'
-// import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
-
- // 编辑器实例，必须用 shallowRef
-    const editorRef = shallowRef()
+import { onBeforeUnmount, ref, onMounted, getCurrentInstance } from 'vue'
     // 内容 HTML
-    const valueHtml = ref('')
-
-    // 模拟 ajax 异步获取内容
-    onMounted(() => {
-        setTimeout(() => {
-            valueHtml.value = 
-			'<p>模拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax 异步设置内容拟 Ajax</p>'
-        }, 1000)
-    })
-
-    const toolbarConfig = {}
-    const editorConfig = { 
-		readOnly:true
+    const valueHtml = ref('<h4>测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据</h4>')
+	//markdown内容（需要将markdown转html后在richtext展示）
+	const valueMd = ref('')
+	const location = ref('')
+	let goComment = ()=>{
+		location.value = 'allComment'
 	}
-
-    // 组件销毁时，也及时销毁编辑器
-    onBeforeUnmount(() => {
-        const editor = editorRef.value
-        if (editor == null) return
-        editor.destroy()
-    })
-
-    const handleCreated = (editor) => {
-      editorRef.value = editor // 记录 editor 实例，重要！
-    }
+	let goArticle=()=>{
+		location.value = 'article'
+	}
+	// 获取组件实例
+	const instance = getCurrentInstance();
+	const query = uni.createSelectorQuery().in(instance);
+	let locationChange = (e)=>{
+		query.select("#allComment")
+		    .boundingClientRect((rect) => {
+				if(rect.top>=250){
+					//显示移动到评论
+				}
+		    })
+		    .exec();
+		// console.log(e.detail);//滚动位置
+	}
 </script>
 
 <style lang="less" scoped>
 .article-container{
 	width: 93%;
-	height: 100%;
+	height: 100vh;
 	margin: 0 auto;
 	.article-info{
 		width: 100%;
