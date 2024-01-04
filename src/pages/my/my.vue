@@ -63,11 +63,15 @@ const goPage=(e)=>{
 			url:`/pages/myActive/myActive?title=我的点赞`
 		})
 	}else if (pageName == '个人资料' || id == 'userInfo'){
-		
+		uni.navigateTo({
+			url:`/pages/myInfo/myInfo`
+		})
 	}else if(pageName == '退出登录' || id == 'loginout'){
 		
 	}else if(pageName == '阅读历史' || id == 'readHistory'){
-		
+		uni.navigateTo({
+			url:`/pages/myActive/myActive?title=阅读历史`
+		})
 	}
 }
 const goMyCollect = ()=>{

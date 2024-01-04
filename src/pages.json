@@ -86,6 +86,14 @@
 				"navigationBarTitleText" : "",
 				"enablePullDownRefresh" : false
 			}
+		},
+		{
+			"path" : "pages/myInfo/myInfo",
+			"style" : 
+			{
+				"navigationBarTitleText" : "个人资料",
+				"enablePullDownRefresh" : false
+			}
 		}
 	],
 	"globalStyle": {
@@ -94,12 +102,11 @@
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8",
 		"usingComponents": {
-			"van-tab": "/wxcomponents/dist/tab/index",
-			"van-tabs": "/wxcomponents/dist/tabs/index",
-			"van-icon": "/wxcomponents/dist/icon/index",
-			"van-button": "/wxcomponents/dist/button/index",
-			"van-dropdown-menu": "/wxcomponents/dist/dropdown-menu/index",
-			"van-dropdown-item": "/wxcomponents/dist/dropdown-item/index"
+			"van-tab": "/wxcomponents/vant/tab/index",
+			"van-tabs": "/wxcomponents/vant/tabs/index",
+			"van-icon": "/wxcomponents/vant/icon/index",
+			"van-button": "/wxcomponents/vant/button/index",
+			"van-uploader": "/wxcomponents/vant/uploader/index"
 		}
 	},
 	"tabBar": {
