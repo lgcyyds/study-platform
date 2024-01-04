@@ -44,9 +44,9 @@
 			<view class="article-comment" id="allComment">
 				<commentList/>
 			</view>
-			<!-- 评论组件 -->
 		</view>
 	</scroll-view>
+	<!-- 底部评论组件 -->
 	<comment @toComment="goComment" @toArticle="goArticle"></comment>
 	
 </template>
