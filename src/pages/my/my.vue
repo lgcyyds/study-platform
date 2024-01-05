@@ -19,7 +19,7 @@
 				<view class="count-text">收藏</view>
 				<view class="count-num">1</view>
 			</view>
-			<view class="count-article">
+			<view class="count-article" @click="goMyArticle">
 				<view class="count-text">文章</view>
 				<view class="count-num">2</view>
 			</view>
@@ -79,6 +79,12 @@ const goMyCollect = ()=>{
 		url:`/pages/myActive/myActive?title=我的收藏`
 	})
 }
+const goMyArticle = ()=>{
+	uni.navigateTo({
+		url:`/pages/myArticle/myArticle`
+	})
+}
+
 onMounted(() => {});
 </script>
 

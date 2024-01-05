@@ -4,7 +4,7 @@
 			<view class="comment-input">
 				<image class="comment-icon" src="../../static/assets/edit.png" mode="aspectFill"></image>
 				<p>
-					写评论...{{locationFlag}}
+					写评论...
 				</p>
 			</view>
 			<image v-if="iconFlag" @click="changeBtn" class="icon" src="../../static/assets/commentErea.png" mode="aspectFill"></image>
