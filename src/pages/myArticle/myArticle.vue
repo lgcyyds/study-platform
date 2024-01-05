@@ -3,7 +3,7 @@
 		<view class="article_container">
 			<articleList></articleList>
 		</view>
-		<uni-fab ref="fab" :pattern="pattern" :content="content" :horizontal="horizontal" :vertical="vertical" :direction="direction" @trigger="trigger" @fabClick="fabClick" />
+		<uni-fab ref="fab" :pattern="pattern" :content="content" horizontal="right" vertical="bottom" direction="vertical" @trigger="trigger"/>
 	</view>
 </template>
 
@@ -36,9 +36,12 @@ const content = ref([
 		active: false
 	}
 ]);
-const horizontal = ref('right')
-const vertical = ref('bottom')
-const direction = ref('vertical')
+
+const isShow = ref(false)
+const trigger = (e)=>{
+	console.log(e);
+	isShow.value = false
+}
 </script>
 
 <style lang="less" scoped>
