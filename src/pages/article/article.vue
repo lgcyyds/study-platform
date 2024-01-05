@@ -1,5 +1,5 @@
 <template>
-	<scroll-view scroll-y="true" show-scrollbar="false" :scroll-into-view="location" @scroll="locationChange" scroll-with-animation="true">
+	<scroll-view scroll-y="true" show-scrollbar="false" :scroll-into-view="moveFlag" id="scrollLocation" @scroll="locationChange" scroll-with-animation="true">
 		<view class="article-container">
 			<view class="article-info" id="article">
 				<view class="article-title">
@@ -47,37 +47,49 @@
 		</view>
 	</scroll-view>
 	<!-- 底部评论组件 -->
-	<comment @toComment="goComment" @toArticle="goArticle"></comment>
+	<comment v-model:locationFlag="locationFlag" v-model:iconFlag="iconFlag"></comment>
 	
 </template>
 
 <script setup>
 import comment from '@/components/comment/comment.vue'
 import commentList from '@/components/commentList/commentList.vue'
-import { onBeforeUnmount, ref, onMounted, getCurrentInstance } from 'vue'
+import { isBoolean } from 'lodash';
+import { onBeforeUnmount, ref, onMounted, getCurrentInstance, computed } from 'vue'
     // 内容 HTML
     const valueHtml = ref('<h4>测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据</h4>')
 	//markdown内容（需要将markdown转html后在richtext展示）
 	const valueMd = ref('')
-	const location = ref('')
-	let goComment = ()=>{
-		location.value = 'allComment'
-	}
-	let goArticle=()=>{
-		location.value = 'article'
-	}
-	// 获取组件实例
-	const instance = getCurrentInstance();
-	const query = uni.createSelectorQuery().in(instance);
-	let locationChange = (e)=>{
+	const locationFlag = ref(true)//true标识为评论、false为回顶部
+	const moveFlag =  computed(()=>{
+		if(isBoolean(locationFlag.value)){
+			return locationFlag.value?'article':'allComment'
+		}else{
+			return ''
+		}
+	})
+	onMounted(()=>{
+		//记录评论区距离顶部的原始高度
+		const instance = getCurrentInstance();
+		const query = uni.createSelectorQuery().in(instance);
 		query.select("#allComment")
-		    .boundingClientRect((rect) => {
-				if(rect.top>=250){
-					//显示移动到评论
-				}
-		    })
-		    .exec();
-		// console.log(e.detail);//滚动位置
+			.boundingClientRect((rect) => {
+				commentTop.value = rect.top
+			})
+			.exec();
+	})
+
+	
+	const commentTop = ref(0)//记录评论区距离顶部的原始高度
+	const iconFlag = ref(true)//图标的标志
+	let locationChange = (e)=>{ 
+		locationFlag.value = ''//重置位置标识，保证改变时能移动页面
+		let st = e.target.scrollTop
+		if(st + 150 >commentTop.value){
+			iconFlag.value = false
+		}else{
+			iconFlag.value = true
+		}
 	}
 </script>
 

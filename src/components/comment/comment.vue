@@ -4,40 +4,47 @@
 			<view class="comment-input">
 				<image class="comment-icon" src="../../static/assets/edit.png" mode="aspectFill"></image>
 				<p>
-					写评论...
+					写评论...{{locationFlag}}
 				</p>
 			</view>
-			<image v-if="btnType" @click="changeBtn" class="icon" src="../../static/assets/commentErea.png" mode="aspectFill"></image>
+			<image v-if="iconFlag" @click="changeBtn" class="icon" src="../../static/assets/commentErea.png" mode="aspectFill"></image>
 			<image v-else @click="changeBtn" class="icon" src="../../static/assets/top.png" mode="aspectFill"></image>
-			<image @click="changeCollect" class="icon" :src="`../../static/assets/clickCollect${isCollect?'':'_on'}.png`" mode="aspectFill"></image>22
-			<image @click="changeLike" class="icon" :src="`../../static/assets/clickLike${isLike?'':'_on'}.png`" mode="aspectFill"></image>12
+			<image @click="changeCollect($event)" :class="['icon',isclickCollect?'icon-change':'']" :src="`../../static/assets/clickCollect${isCollect?'':'_on'}.png`" mode="aspectFill"></image>22
+			<image @click="changeLike($event)" :class="['icon',isclickLike?'icon-change':'']" :src="`../../static/assets/clickLike${isLike?'':'_on'}.png`" mode="aspectFill"></image>12
 		</view>
 	</view>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+	const emit = defineEmits(['toComment','toArticle','update:locationFlag','update:iconFlag'])
+	const props = defineProps(['locationFlag','iconFlag'])
 	let isCollect = ref(true)
-	let isLike = ref(true)
-	let changeCollect=()=>{
+	let isclickCollect = ref(false)
+	let changeCollect=(e)=>{
 		// 收藏和取消收藏
+		isclickCollect.value = true
 		isCollect.value = false
 	}
+	
+	
+	let isLike = ref(true)
+	let isclickLike = ref(false)
 	let changeLike=()=>{
 		// 点赞和取消点赞
+		isclickLike.value = true
 		isLike.value = false
 	}
-	let btnType = ref(true)//true是评论区  false是文章
-	const emit = defineEmits(['toComment','toArticle'])
+	
+	
+	//locationFlag  true图标显示评论  false是文章
+	//iconFlag  true图标显示评论  false是文章
 	let changeBtn=()=>{
-		if(btnType.value){
-			btnType.value = false
-			emit('toComment')
-		}else{
-			btnType.value = true
-			emit('toArticle')
-		}
+		emit('update:iconFlag',!props.iconFlag)//点击改变图标
+		emit('update:locationFlag',!props.iconFlag)//点击改变位置（位置改变方向由图标主导）
 	}
+
+	
 </script>
 
 <style lang="less" scoped>
@@ -77,6 +84,17 @@ import { ref } from 'vue';
 			.icon{
 				width: 50rpx;
 				height: 50rpx;
+			}
+			.icon-change{
+				animation: btnChange .5s;
+			}
+			@keyframes btnChange{
+				75%{
+					transform: scale(150%);
+				}
+				100%{
+					transform: scale(50%);
+				}
 			}
 		}
 	}
