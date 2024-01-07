@@ -1,7 +1,7 @@
 <template>
 	<view class="my_article">
 		<view class="article_container">
-			<articleList></articleList>
+			<articleList :btnType='btnType'></articleList>
 		</view>
 		<uni-fab ref="fab" :pattern="pattern" :content="content" :horizontal="horizontal" :vertical="vertical" :direction="direction" @trigger="trigger" @fabClick="fabClick" />
 	</view>
@@ -9,12 +9,12 @@
 
 <script setup>
 import articleList from '@/components/articleList/articleList.vue';
-import { ref } from 'vue';
+import { ref, toRaw } from 'vue';
 
 const pattern = ref({
 	color: '#7A7E83',
 	backgroundColor: '#fff',
-	selectedColor: '#007AFF',
+	selectedColor: '#5b5e62',
 	buttonColor: '#007AFF',
 	iconColor: '#fff'
 });
@@ -22,16 +22,19 @@ const pattern = ref({
 const content = ref([
 	{
 		icon: 'plus',
+		selectedIcon:'plus-filled',
 		text: '写文章',
 		active: false
 	},
 	{
 		icon: 'compose',
+		selectedIcon:'compose-filled',
 		text: '编辑',
 		active: false
 	},
 	{
 		icon: 'trash',
+		selectedIcon:'trash-filled',
 		text: '删除',
 		active: false
 	}
@@ -39,6 +42,25 @@ const content = ref([
 const horizontal = ref('right')
 const vertical = ref('bottom')
 const direction = ref('vertical')
+const btnType = ref('')
+const trigger = (e)=>{
+	let isBtnActive = toRaw(e.item).active//修改前的
+	//重置所有按钮
+	content.value.forEach(item =>{
+		item.active = false
+	})
+	content.value[e.index].active = !isBtnActive
+	if(e.index == 0){
+		//写文章
+		btnType.value = ''
+	}else if(e.index == 1){
+		//编辑
+		btnType.value = !isBtnActive?'primary':''
+	}else{
+		//删除
+		btnType.value = !isBtnActive?'warn':''
+	}
+}
 </script>
 
 <style lang="less" scoped>
