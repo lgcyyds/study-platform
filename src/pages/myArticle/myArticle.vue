@@ -3,7 +3,7 @@
 		<view class="article_container">
 			<articleList :btnType='btnType'></articleList>
 		</view>
-		<uni-fab ref="fab" :pattern="pattern" :content="content" horizontal="right" vertical="bottom" direction="vertical" @trigger="trigger"/>
+		<uni-fab ref="fab" :pattern="pattern" :content="content" horizontal="right" vertical="bottom" direction="vertical" @trigger="trigger" @fabClick="fabClick"/>
 	</view>
 </template>
 
@@ -22,13 +22,13 @@ const pattern = ref({
 const content = ref([
 	{
 		icon: 'plus',
-		selectedIcon:'plus-filled',
+		selectedIcon:'plus',
 		text: '写文章',
 		active: false
 	},
 	{
-		icon: 'compose',
-		selectedIcon:'compose-filled',
+		icon: 'tune',
+		selectedIcon:'tune-filled',
 		text: '编辑',
 		active: false
 	},
@@ -51,6 +51,9 @@ const trigger = (e)=>{
 	if(e.index == 0){
 		//写文章
 		btnType.value = ''
+		uni.navigateTo({
+			url:`/pages/articleWritePage/articleWritePage?title=文章编写`
+		})
 	}else if(e.index == 1){
 		//编辑
 		btnType.value = !isBtnActive?'primary':''
@@ -58,6 +61,13 @@ const trigger = (e)=>{
 		//删除
 		btnType.value = !isBtnActive?'warn':''
 	}
+}
+//点击悬浮按钮重置按钮样式和取消删除编辑按钮
+const fabClick = ()=>{
+	content.value.forEach(item =>{
+		item.active = false
+	})
+	btnType.value = ''
 }
 </script>
 
