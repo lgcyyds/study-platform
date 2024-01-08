@@ -22,7 +22,7 @@
 					class="uni-fab__item" @click="_onItemClick(index, item)">
 					<!-- <image :src="item.active ? item.selectedIconPath : item.iconPath" class="uni-fab__item-image"
 						mode="aspectFit" /> -->
-					<uni-icons :type="item.icon" size="25" ></uni-icons>
+					<uni-icons :type="item.active?item.selectedIcon:item.icon" size="25" ></uni-icons>
 					<text class="uni-fab__item-text"
 						:style="{ color: item.active ? styles.selectedColor : styles.color }">{{ item.text }}</text>
 				</view>
