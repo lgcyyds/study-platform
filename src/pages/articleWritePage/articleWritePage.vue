@@ -12,23 +12,19 @@
 				@fail="fail" 
 			/>
 		</view>
-		<view class="input_content">
-			<uni-forms ref="form" :modelValue="formData" :rules="rules">
-				<uni-forms-item label="文章标题" name="title">
-					<uni-easyinput type="text" v-model="formData.title" placeholder="请输入标题"/>
-				</uni-forms-item>
-			</uni-forms>
-			<myEditor></myEditor>
+		<view class="input_content">	
+			<view class="uni-textarea">
+				<myEditor></myEditor>
+			</view>
 			<button @click="submit">发布</button>
 		</view>
 	</view>
 </template>
 
 <script setup>
-import myEditor from '@/components/editor/editor.vue'
 import { onLoad } from '@dcloudio/uni-app';
 import { reactive, ref } from 'vue';
-
+import myEditor from '@/components/myEditor/myEditor.vue'
 
 const imageValue = ref([])
 const uploaderStyle = ref({
@@ -53,30 +49,8 @@ const fail = (e)=>{
 }
 
 
-const formData = ref({
-	title:''
-})
-const rules = ref({
-	title: {
-		rules: [{
-				required: true,
-				errorMessage: '请输入标题',
-			},
-			{
-				minLength: 1,
-				maxLength: 15,
-				errorMessage: '标题长度在 {minLength} 到 {maxLength} 个字符',
-			}
-		]
-	},
-})
-const form = ref(null)
 const submit = ()=>{
-	form.value.validate().then(res=>{
-			console.log('表单数据信息：', res);
-		}).catch(err =>{
-			console.log('表单错误信息：', err);
-		})
+
 }
 //初始化title
 onLoad((options)=>{
