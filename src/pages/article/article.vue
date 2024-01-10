@@ -1,5 +1,5 @@
 <template>
-	<scroll-view scroll-y="true" show-scrollbar="false" :scroll-into-view="moveFlag" id="scrollLocation" @scroll="locationChange" scroll-with-animation="true">
+	<scroll-view style="{height: calc(100vh - 100rpx);}" scroll-y="true" show-scrollbar="false" :scroll-into-view="moveFlag" id="scrollLocation" @scroll="locationChange" scroll-with-animation="true">
 		<view class="article-container">
 			<view class="article-info" id="article">
 				<view class="article-title">
@@ -47,13 +47,15 @@
 		</view>
 	</scroll-view>
 	<!-- 底部评论组件 -->
-	<comment v-model:locationFlag="locationFlag" v-model:iconFlag="iconFlag"></comment>
-	
+	<comment v-show="commentType" v-model:locationFlag="locationFlag" v-model:iconFlag="iconFlag" @changeComment="switchCommentBox"></comment>
+	<commentBox v-show="!commentType"></commentBox>
+	<van-overlay :show="isShow" @click="onClickHide" />
 </template>
 
 <script setup>
 import comment from '@/components/comment/comment.vue'
 import commentList from '@/components/commentList/commentList.vue'
+import commentBox from '@/components/commentBox/commentBox.vue'
 import { isBoolean } from 'lodash';
 import { onBeforeUnmount, ref, onMounted, getCurrentInstance, computed } from 'vue'
     // 内容 HTML
@@ -91,12 +93,23 @@ import { onBeforeUnmount, ref, onMounted, getCurrentInstance, computed } from 'v
 			iconFlag.value = true
 		}
 	}
+	
+	const commentType = ref(true)
+	const isShow = ref(false)
+	const switchCommentBox=()=>{
+		commentType.value = false
+		isShow.value = true
+	}
+	const onClickHide=()=>{
+		isShow.value = false
+		commentType.value = true
+	}
 </script>
 
 <style lang="less" scoped>
 .article-container{
 	width: 93%;
-	height: 100vh;
+	height: calc(100vh - 100rpx);
 	margin: 0 auto;
 	.article-info{
 		width: 100%;
@@ -183,8 +196,8 @@ import { onBeforeUnmount, ref, onMounted, getCurrentInstance, computed } from 'v
 			margin: 20rpx 0;
 		}
 	}
-	.article-comment{
-		padding-bottom: 120rpx;
-	}
+	// .article-comment{
+	// 	padding-bottom: 120rpx;
+	// }
 }
 </style>

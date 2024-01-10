@@ -1,7 +1,7 @@
 <template>
 	<view class="comment-block">
 		<view class="comment-container">
-			<view class="comment-input">
+			<view class="comment-input" @click="changeComment">
 				<image class="comment-icon" src="../../static/assets/edit.png" mode="aspectFill"></image>
 				<p>
 					写评论...
@@ -17,7 +17,7 @@
 
 <script setup>
 import { ref } from 'vue';
-	const emit = defineEmits(['toComment','toArticle','update:locationFlag','update:iconFlag'])
+	const emit = defineEmits(['changeComment','update:locationFlag','update:iconFlag'])
 	const props = defineProps(['locationFlag','iconFlag'])
 	let isCollect = ref(true)
 	let isclickCollect = ref(false)
@@ -44,16 +44,18 @@ import { ref } from 'vue';
 		emit('update:locationFlag',!props.iconFlag)//点击改变位置（位置改变方向由图标主导）
 	}
 
-	
+	const changeComment=()=>{
+		emit('changeComment')
+	}
 </script>
 
 <style lang="less" scoped>
 	.comment-block{
 		width: 100vw;
 		height: 100rpx;
-		position: fixed;
-		bottom: 0;
-		left: 0;
+		// position: fixed;
+		// bottom: 0;
+		// left: 0;
 		background-color: #ffffff;
 		.comment-container{
 			width: 100%;

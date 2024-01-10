@@ -122,7 +122,8 @@
 			"van-tabs": "/wxcomponents/vant/tabs/index",
 			"van-icon": "/wxcomponents/vant/icon/index",
 			"van-button": "/wxcomponents/vant/button/index",
-			"van-uploader": "/wxcomponents/vant/uploader/index"
+			"van-uploader": "/wxcomponents/vant/uploader/index",
+			"van-overlay": "/wxcomponents/vant/overlay/index"
 		}
 	},
 	"tabBar": {
