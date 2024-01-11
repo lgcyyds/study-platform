@@ -6,7 +6,7 @@
 				单选题
 			</view>
 			<view class="collect_img">
-				<image @click="clickCollect" class="collect" :src="`../../static/assets/clickCollect${isCollected?'_on':''}.png`" mode="aspectFill"></image>
+				<image @click="clickCollect" :class="['collect',clickActive?'collect_active':'']" :src="`../../static/assets/clickCollect${isCollected?'_on':''}.png`" mode="aspectFill"></image>
 			</view>
 			<view class="topic_index">
 				<text>1</text>/150
@@ -17,7 +17,7 @@
 				<view class="topic_text">
 					测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
 				</view>
-				<view class="topic_option" v-for="item in 4">
+				<view class="topic_option" v-for="(item,index) in 4" :key="index">
 					<view class="option_Word">
 						A.
 					</view>
@@ -41,8 +41,10 @@
 <script setup>
 import { ref } from 'vue';
 let isCollected = ref(false)
+const clickActive = ref(false)
 const clickCollect = () =>{
 	isCollected.value = true
+	clickActive.value = true
 }
 </script>
 
@@ -79,6 +81,17 @@ body{
 				margin-top: 5rpx;
 				width: 40rpx;
 				height: 35rpx;
+			}
+			.collect_active{
+				animation: .5s btnChange;
+			}
+			@keyframes btnChange{
+				75%{
+					transform: scale(150%);
+				}
+				100%{
+					transform: scale(50%);
+				}
 			}
 		}
 		.topic_index{

@@ -47,8 +47,8 @@
 		</view>
 	</scroll-view>
 	<!-- 底部评论组件 -->
-	<comment v-show="commentType" v-model:locationFlag="locationFlag" v-model:iconFlag="iconFlag" @changeComment="switchCommentBox"></comment>
-	<commentBox v-show="!commentType"></commentBox>
+	<comment v-if="commentType" v-model:locationFlag="locationFlag" v-model:iconFlag="iconFlag" @changeComment="switchCommentBox"></comment>
+	<commentBox v-else @changeComment="getCommentContent"></commentBox>
 	<van-overlay :show="isShow" @click="onClickHide" />
 </template>
 
@@ -94,6 +94,7 @@ import { onBeforeUnmount, ref, onMounted, getCurrentInstance, computed } from 'v
 		}
 	}
 	
+	//底部评论组件
 	const commentType = ref(true)
 	const isShow = ref(false)
 	const switchCommentBox=()=>{
@@ -103,6 +104,9 @@ import { onBeforeUnmount, ref, onMounted, getCurrentInstance, computed } from 'v
 	const onClickHide=()=>{
 		isShow.value = false
 		commentType.value = true
+	}
+	const getCommentContent = (value)=>{
+			console.log(value);
 	}
 </script>
 

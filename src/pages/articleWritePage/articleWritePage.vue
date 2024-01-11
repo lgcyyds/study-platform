@@ -13,10 +13,11 @@
 			/>
 		</view>
 		<view class="input_content">	
+		<uni-easyinput type="text" v-model="articleTitle" placeholder="请输入文章标题" maxlength="15"/>
 			<view class="uni-textarea">
 				<myEditor></myEditor>
 			</view>
-			<button @click="submit">发布</button>
+			<button class="sub-btn" type="primary" @click="submit">发布</button>
 		</view>
 	</view>
 </template>
@@ -48,7 +49,7 @@ const fail = (e)=>{
 	console.log('上传失败：',e)
 }
 
-
+const articleTitle = ref('')
 const submit = ()=>{
 
 }
@@ -81,7 +82,10 @@ onLoad((options)=>{
 	}
 	.input_content{
 		width: 93%;
-		margin: 0 auto;
+		margin: 20rpx auto;
+		.sub-btn{
+			width: 100%;
+		}
 	}
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
 	<view class="comment_box">
 		<view class="comment_left">
-			<input class="comment_input" placeholder="输入评论" type="text" />
+			<input class="comment_input" placeholder="输入评论" type="text" focus v-model="commentText" @input="changeCommentText"/>
 		</view>
 		<view class="comment_right">
 			<view class="send_btn">
@@ -12,7 +12,12 @@
 </template>
 
 <script setup>
-
+import { ref } from 'vue';
+const emit = defineEmits(['changeComment'])
+const commentText = ref('')
+const changeCommentText = ()=>{
+	emit('changeComment',commentText.value)
+}
 </script>
 
 <style lang="less" scoped>
