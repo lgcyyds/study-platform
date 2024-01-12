@@ -3,7 +3,7 @@
 		<!-- 用户信息 -->
 		<view class="user">
 			<view class="user-container">
-				<view class="user-pic">
+				<view class="user-pic" @click="login">
 					<image src="../../static/logo.png" mode="aspectFill"></image>
 				</view>
 				<view class="user-name">用户名</view>
@@ -54,6 +54,26 @@
 
 <script setup>
 import { onMounted } from 'vue';
+
+const login = ()=>{
+	wx.login({
+	  success (res) {
+	    if (res.code) {
+	      //发起网络请求
+	      // wx.request({
+	      //   url: 'https://example.com/onLogin',
+	      //   data: {
+	      //     code: res.code
+	      //   }
+	      // })
+		  console.log(res.code);
+	    } else {
+	      console.log('登录失败！' + res.errMsg)
+	    }
+	  }
+	})
+}
+
 const goPage=(e)=>{
 	let pageName = e.target.innerText;
 	let id = e.target.id;

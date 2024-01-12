@@ -1,26 +1,30 @@
 <template>
 	<view class="info_container">
 		<view class="info_image">
-			<uni-file-picker 
-				class="imageUploader"
-				v-model="imageValue" 
-				fileMediatype="image" 
-				:limit="1"
-				:del-icon="false"
-				disable-preview
-				mode:grid
-				:image-styles="imageStyle"
-				@select="select" 
-				@progress="progress" 
-				@success="success" 
-				@fail="fail" 
-			/>
+			<button class="avatar_btn" type="default" open-type="chooseAvatar" hover-class="none" @chooseavatar="getAvatar">
+				<!-- <uni-file-picker
+					class="imageUploader"
+					v-model="imageValue" 
+					fileMediatype="image" 
+					:limit="1"
+					:del-icon="false"
+					disable-preview
+					mode:grid
+					:image-styles="imageStyle"
+					@select="select" 
+					@progress="progress" 
+					@success="success" 
+					@fail="fail" 
+				/> -->
+				<!-- <uni-icons type="person-filled" size="30"></uni-icons> -->
+				<image class="avatar" src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2Fd059958d-19f7-46ce-b55b-bbb1928504f3%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1707639345&t=b373c5d56eb7df5f441cc5c42fd26971" mode="aspectFill"></image>
+			</button>
 		</view>
 		<view class="info_msg">
 			<!-- <uni-easyinput type="text" v-model="formData.name" placeholder="请输入姓名" /> -->
 			<uni-forms ref="form" :modelValue="formData" :rules="rules">
 				<uni-forms-item label="姓名" name="name">
-					<uni-easyinput type="text" v-model="formData.name" placeholder="请输入姓名" />
+					<uni-easyinput type="nickname" v-model="formData.name" placeholder="请输入姓名"/>
 				</uni-forms-item>
 				<uni-forms-item label="邮箱" name="email">
 					<uni-easyinput class="input" v-model="formData.email" type="text" placeholder="请输入邮箱" />
@@ -42,6 +46,13 @@ const imageStyle = ref({
 		"radius":"50%" 		// 边框圆角，支持百分比
 	}
 })
+
+const getAvatar = (e)=>{
+	// console.log(e.detail.avatarUrl);
+	// const userImg = e.detail.avatarUrl
+	// imageValue.value.push(userImg)
+}
+
 const formData = ref({
 		name: '',
 		email: ''
@@ -118,12 +129,27 @@ const submit=()=> {
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		/deep/.uni-file-picker {
-			    overflow: visible;
-			    flex: 0 1 auto;
-			    width: 180rpx;
-			    height: 165rpx;
+		border: none;
+		.avatar_btn{
+			width: 150rpx;
+			height: 150rpx;
+			overflow: hidden;
+			background: rgba(194, 194, 194, 0.5);
+			.avatar{
+				width: 150rpx;
+				height: 150rpx;
+			}
+			&::after{
+				// border:none;
+			}
+			/deep/.uni-file-picker {
+				overflow: visible;
+				flex: 0 1 auto;
+				width: 180rpx;
+				height: 165rpx;
+			}
 		}
+		
 	}
 	.info_msg{
 		width: 93%;
