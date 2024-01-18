@@ -5,6 +5,7 @@
 				v-model="imageValue" 
 				fileMediatype="image" 
 				mode="grid" 
+				limit="1"
 				:image-styles="uploaderStyle"
 				@select="select" 
 				@progress="progress" 

@@ -39,7 +39,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
+
 let isCollected = ref(false)
 const clickActive = ref(false)
 const clickCollect = () =>{

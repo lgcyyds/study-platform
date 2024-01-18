@@ -57,6 +57,8 @@
     "@vant/weapp": "^1.11.2",
     "@vue/cli": "^5.0.8",
     "@vueup/vue-quill": "^1.0.0-alpha.40",
+    "axios": "^1.6.5",
+    "axios-adapter-uniapp": "^0.1.4",
     "less": "^4.2.0",
     "lodash": "^4.17.21",
     "marked": "^9.0.0",

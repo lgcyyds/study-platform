@@ -54,22 +54,27 @@
 
 <script setup>
 import { onMounted } from 'vue';
-
-const login = ()=>{
+import {userLogin} from '../../api/index.js'
+function login(){
 	wx.login({
-	  success (res) {
-	    if (res.code) {
-	      //发起网络请求
-	      // wx.request({
-	      //   url: 'https://example.com/onLogin',
-	      //   data: {
-	      //     code: res.code
-	      //   }
-	      // })
-		  console.log(res.code);
-	    } else {
-	      console.log('登录失败！' + res.errMsg)
-	    }
+		async success (res) {
+			if (res.code) {
+				let params = {
+					code:res.code
+				}
+				try{
+					const dataMsg = await userLogin(params)
+					const {code,data} = dataMsg
+					if(code =='0000'){
+						console.log(data);
+					}
+				}catch(e){
+					console.log(e);
+				}
+				
+			} else {
+			  console.log('登录失败！' + res.errMsg)
+			}
 	  }
 	})
 }
@@ -87,7 +92,7 @@ const goPage=(e)=>{
 			url:`/pages/myInfo/myInfo`
 		})
 	}else if(pageName == '退出登录' || id == 'loginout'){
-		
+
 	}else if(pageName == '阅读历史' || id == 'readHistory'){
 		uni.navigateTo({
 			url:`/pages/myActive/myActive?title=阅读历史`

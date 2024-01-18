@@ -35,7 +35,7 @@
 <script setup>
 const goTopicExercise = ()=>{
 	uni.navigateTo({
-		url:'/pages/topicExercise/topicExercise'
+		url:'/pages/topicExercise/topicExercise',
 	})
 }
 </script>
