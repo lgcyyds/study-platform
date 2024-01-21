@@ -3,7 +3,7 @@
 		<!-- 用户信息 -->
 		<view class="user">
 			<view class="user-container">
-				<view class="user-pic" @click="login">
+				<view class="user-pic" @click="WXlogin">
 					<image src="../../static/logo.png" mode="aspectFill"></image>
 				</view>
 				<view class="user-name">用户名</view>
@@ -55,7 +55,7 @@
 <script setup>
 import { onMounted } from 'vue';
 import {userLogin} from '../../api/index.js'
-function login(){
+function WXlogin(){
 	wx.login({
 		async success (res) {
 			if (res.code) {
@@ -75,7 +75,10 @@ function login(){
 			} else {
 			  console.log('登录失败！' + res.errMsg)
 			}
-	  }
+		},
+		fail(res){
+			console.log(res);
+		}
 	})
 }
 
