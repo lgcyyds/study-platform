@@ -56,6 +56,9 @@
 import { onMounted } from 'vue';
 import {userLogin} from '../../api/index.js'
 function WXlogin(){
+	uni.showLoading({
+	      title: '登录中...'
+	});
 	wx.login({
 		async success (res) {
 			if (res.code) {
@@ -67,6 +70,10 @@ function WXlogin(){
 					const {code,data} = dataMsg
 					if(code =='0000'){
 						console.log(data);
+						uni.hideLoading();
+						uni.showToast({
+						      title: '登录成功',
+						});
 					}
 				}catch(e){
 					console.log(e);
