@@ -9,18 +9,29 @@ export const userSignIn = (params) => requests({url: '/users/signin', method: 'p
 //新增文章(具体看后端)
 export const addArticle = (data) => requests(({url:'/articles/add',method:'post',data}))
 //获取文章（id, collected, liked, keywords, page）
-export const getArticle = (data) => requests(({url:'/articles/get',method:'get',data}))
+export const getArticle = (params) => requests(({url:'/articles/get',method:'get',params}))
 //收藏、点赞文章（userId, articleId, type）
-export const collectOrLikeArticle = (data) => requests(({url:'/articles/comment',method:'post',data}))
+export const collectOrLikeArticle = (data) => requests(({url:'/articles/collectOrLike',method:'post',data}))
 //评论文章(userId, articleId, content)
-export const commentArticle = (data) => requests(({url:'/articles/collectOrLike',method:'post',data}))
+export const commentArticle = (data) => requests(({url:'/articles/comment',method:'post',data}))
 //获取点赞的文章(id)
-export const commentArticle = (params) => requests(({url:'/articles/getliked',method:'get',params}))
+export const getLiked = (params) => requests(({url:'/articles/getliked',method:'get',params}))
 //获取收藏的文章和题目(id)
-export const commentArticle = (params) => requests(({url:'/articles/getAllCollect',method:'get',params}))
-
+export const getAllCollect = (params) => requests(({url:'/articles/getAllCollect',method:'get',params}))
+//编辑文章
+export const editArticle = (data) => requests(({url:'/articles/edit',method:'post',data}))
+//删除文章
+export const delArticle = (params) => requests(({url:'/articles/delete',method:'post',params}))
+//获取阅读历史
+export const getHistoryList = (params) => requests(({url:'/articles/getHistory',method:'get',params}))
+//获取点赞我的文章的列表
+export const getLikeArticleMsgList = (params) => requests(({url:'/articles/getLikeArticleMsg',method:'get',params}))
+//获取收藏我的文章的列表
+export const getcollectArticleMsgList = (params) => requests(({url:'/articles/getcollectArticleMsg',method:'get',params}))
+//获取评论我的文章的列表
+export const getCommentArticleMsgList = (params) => requests(({url:'/articles/getCommentArticleMsg',method:'get',params}))
 // <------------------------------------题目接口---------------------------------------->
-//获取题目(id, page, level, tag)
-export const getQuestion = (params) => requests(({url:'/articles/get',method:'get',params}))
+//获取题目(id, page, level, tag,keywords)
+export const getQuestion = (params) => requests(({url:'/question/get',method:'get',params}))
 //获取收藏题目(userId, questionId)
-export const getCollectQuestion = (data) => requests(({url:'/articles/collect',method:'post',data}))
+export const getCollectQuestion = (data) => requests(({url:'/question/collect',method:'post',data}))
