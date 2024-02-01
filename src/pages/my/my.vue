@@ -53,8 +53,10 @@
 </template>
 
 <script setup>
+import { onLoad } from '@dcloudio/uni-app';
 import { onMounted } from 'vue';
 import {userLogin} from '../../api/index.js'
+import {  } from '@/api/index.js';
 function WXlogin(){
 	uni.showLoading({
 	      title: '登录中...'
@@ -67,9 +69,9 @@ function WXlogin(){
 				}
 				try{
 					const dataMsg = await userLogin(params)
-					const {code,data} = dataMsg
+					const {code,data:{userInfo}} = dataMsg
 					if(code =='0000'){
-						console.log(data);
+						console.log(userInfo);
 						uni.hideLoading();
 						uni.showToast({
 						      title: '登录成功',
@@ -120,7 +122,13 @@ const goMyArticle = ()=>{
 	})
 }
 
-onMounted(() => {});
+onMounted(() => {
+	
+});
+
+	
+
+
 </script>
 
 <style lang="less">

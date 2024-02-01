@@ -3,7 +3,7 @@
 		<view class="article-container">
 			<view class="article-info" id="article">
 				<view class="article-title">
-					不能超过32个字不能超过32个字不能超过32个字不能超过32个字
+					{{ArticleData.title}}
 				</view>
 				<view class="article-author-info">
 					<view class="article-author-items">
@@ -22,7 +22,7 @@
 									</view>
 									<image class="view-icon" src="../../static/assets/view.png" mode="aspectFill"></image>
 									<view class="day">
-										23
+										{{ArticleData.visited}}
 									</view>
 								</view>
 							</view>
@@ -32,12 +32,12 @@
 			</view>
 			<!-- 文章主体 -->
 			<view class="article-body">
-			  <rich-text :nodes="valueHtml"></rich-text>
+			  <rich-text :nodes="ArticleData.content"></rich-text>
 			</view>
 			<!-- 日期和标签 -->
 			<view class="article-other">
 				<view class="article-date">
-					—— 发表于2000年12月12日 12:12 ——
+					—— 发表于{{userFormatDate(ArticleData.createdTime)}} ——
 				</view>
 			</view>
 			<!-- 全部评论 -->
@@ -58,10 +58,13 @@ import commentList from '@/components/commentList/commentList.vue'
 import commentBox from '@/components/commentBox/commentBox.vue'
 import { isBoolean } from 'lodash';
 import { onBeforeUnmount, ref, onMounted, getCurrentInstance, computed } from 'vue'
+import userFormatDate from "../../hooks/useFormatDate.js"
+import {getArticle} from '../../api/index.js'
+import { onLoad } from '@dcloudio/uni-app';
     // 内容 HTML
-    const valueHtml = ref('<h4>测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据测试数据</h4>')
-	//markdown内容（需要将markdown转html后在richtext展示）
-	const valueMd = ref('')
+    const valueHtml = ref('')
+	const ArticleData = ref({})
+	
 	const locationFlag = ref(true)//true标识为评论、false为回顶部
 	const moveFlag =  computed(()=>{
 		if(isBoolean(locationFlag.value)){
@@ -108,6 +111,26 @@ import { onBeforeUnmount, ref, onMounted, getCurrentInstance, computed } from 'v
 	const getCommentContent = (value)=>{
 			console.log(value);
 	}
+	
+	//获取文章内容
+	async function getArticleDetail(id){
+		try{
+			let params={
+				id:id
+			}
+			let dataMsg = await getArticle(params)
+			const {code,data} = dataMsg
+			if(code == "0000"){
+				ArticleData.value = data[0]
+			}
+		}catch(e){
+			//TODO handle the exception
+			console.log(e);
+		}
+	}
+	onLoad((params)=>{
+		getArticleDetail(params.id)
+	})
 </script>
 
 <style lang="less" scoped>
