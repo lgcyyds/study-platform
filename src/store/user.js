@@ -12,7 +12,9 @@ const useUserStore = defineStore('userInfo', {
    
   },
   actions: {
-    
+    updateUserInfo(data) {
+	  this.userInfo = data
+	}
   },
 })
 

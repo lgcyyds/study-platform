@@ -15,13 +15,13 @@
 		<view class="topic_content">
 			<view class="topic_details">
 				<view class="topic_text">
-					测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试
+					{{questionMsg.title}}
 				</view>
-				<view class="topic_option" v-for="(item,index) in 4" :key="index">
+				<view class="topic_option" v-for="(item,index) in questionMsg.options" :key="index">
 					<view class="option_Word">
-						A.
+						{{Object.keys(item)[0].toUpperCase()+'、'}}
 					</view>
-					<text>测试测试测试测试测试测试测试测试试试测试测试测试测试试测</text>
+					<text>{{item[Object.keys(item)[0]]}}</text>
 				</view>	
 				<view class="topic_control">
 					<view class="control">
@@ -39,7 +39,9 @@
 </template>
 
 <script setup>
+import { onLoad } from '@dcloudio/uni-app';
 import { onMounted, ref } from 'vue';
+import {  getQuestion } from "@/api/index.js";
 
 let isCollected = ref(false)
 const clickActive = ref(false)
@@ -47,6 +49,28 @@ const clickCollect = () =>{
 	isCollected.value = true
 	clickActive.value = true
 }
+
+let questionMsg = ref(null)
+async function getQuestionSearchList(id) {
+  let params = {
+    id
+  };
+  try {
+    let resultMsg = await getQuestion(params);
+    const { code, data } = resultMsg;
+    if (code == "0000") {
+      questionMsg.value = data[0];
+	  console.log(questionMsg.value);
+    }
+  } catch (e) {
+    console.log(e);
+  }
+}
+onLoad((params)=>{
+	console.log(params.id);//拿到题目id
+	
+	getQuestionSearchList(params.id)
+})
 </script>
 
 <style lang="less" scoped>

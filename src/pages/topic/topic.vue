@@ -6,16 +6,17 @@
 			</view>
 		</view>
 		<view class="topic_content">
-			<questionList></questionList>
+			<questionList :qtList="questionsList" @nextPage='getQtList'></questionList>
 		</view>
 	</view>
 </template>
 
 <script setup>
 import questionList from '@/components/questionList/questionList.vue';
+import {getQuestion} from '../../api/index.js'
 import { onLoad } from '@dcloudio/uni-app';
-import { ref } from 'vue';
-let value1 = ref(0);
+import { ref,onMounted } from 'vue';
+let level = ref(1)//1:难度上升  0:难度下降
 let optionList = ref([
 	{ text: '全部题目', value: 0 },
 	{ text: '难度升序', value: 1 },
@@ -23,19 +24,59 @@ let optionList = ref([
 ]);
 let arrowClassName = ref('')
 let changeSort =()=>{
+	questionsList.value = []//重置
+	page.value = 1
 	if(arrowClassName.value == 'topic_arrow_down'){
+		//难度上升
 		arrowClassName.value=''
+		level.value = 1
+		getQtList()
 	}else{
+		//难度下降
 		arrowClassName.value='topic_arrow_down'
+		level.value = 0
+		getQtList()
 	}
 	
 }
 
+//获取所有题目
+let page = ref(1);//页码
+let tag = ref('')
+let questionsList = ref([])
+async function getQtList(){
+	let params= {
+		page:page.value,
+		level:level.value,
+		tag:tag.value
+	}
+	try{
+		let dataMsg = await getQuestion(params)
+		const {code,data} = dataMsg
+		if(code == '0000'){
+			questionsList.value.push(...data)
+			console.log(questionsList.value);
+			page.value++
+			if(data.length =='0'){
+				
+			}
+		}
+	}catch(e){
+		//TODO handle the exception
+	}
+}
+onMounted(()=>{
+	getQtList()
+	console.log(111);
+})
 onLoad((options) => {
 	const { id, title } = options;
 	uni.setNavigationBarTitle({
 		title: title
 	});
+	if(title !== '全部'){
+		tag.value = title
+	}
 });
 </script>
 

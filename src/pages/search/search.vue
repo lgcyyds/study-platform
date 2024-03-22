@@ -1,13 +1,14 @@
 <template>
   <view>
-    <scroll-view class="search_box" scroll-y="true" @scrolltolower="toNextPage">
+    <!-- <scroll-view class="search_box" scroll-y="true" @scrolltolower="toNextPage"> -->
+	<view class="search_box">
       <view class="search_block">
         <image src="../../static/assets/search.png" mode=""></image>
         <view class="text">
           <input
             class="uni-input"
             type="text"
-            v-model="keyword"
+            v-model.lazy="keyword"
             placeholder="请输入搜索词..."
             @input="getResult"
           />
@@ -28,11 +29,12 @@
             <articleList :articleMsgList="articleMsgList"></articleList>
           </van-tab>
           <van-tab title="题目">
-            <questionList :questionMsgList="questionMsgList"></questionList>
+            <questionList :qtList="questionMsgList"></questionList>
           </van-tab>
         </van-tabs>
       </view>
-    </scroll-view>
+    <!-- </scroll-view> -->
+		</view>
   </view>
 </template>
 
@@ -40,7 +42,7 @@
 import articleList from "@/components/articleList/articleList.vue";
 import questionList from "@/components/questionList/questionList.vue";
 import { getArticle, getQuestion } from "@/api/index.js";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 let active = ref(0);
 let keyword = ref("");
 let clearIcon = () => {
@@ -49,6 +51,10 @@ let clearIcon = () => {
 const showClearIcon = computed(() => {
   return keyword.value !== "";
 });
+watch(keyword,()=>{
+	questionMsgList.value = []
+	articleMsgList.value = []
+})
 let articleMsgList = ref([]);
 let questionMsgList = ref([]);
 //获取文章搜索列表
@@ -61,7 +67,7 @@ async function getArticleSearchList() {
     let resultMsg = await getArticle(params);
     const { code, data } = resultMsg;
     if (code == "0000") {
-      articleMsgList.value.push(data);
+      articleMsgList.value.push(...data);
     }
   } catch (e) {
     console.log(e);
@@ -77,7 +83,7 @@ async function getQuestionSearchList() {
     let resultMsg = await getQuestion(params);
     const { code, data } = resultMsg;
     if (code == "0000") {
-      questionMsgList.value.push(data);
+      questionMsgList.value.push(...data);
     }
   } catch (e) {
     console.log(e);
@@ -88,10 +94,12 @@ function getResult() {
   getArticleSearchList();
   getQuestionSearchList();
 }
-function toNextPage() {
-  console.log("翻页了");
-}
-onMounted(() => {});
+// function toNextPage() {
+//   console.log("翻页了");
+// }
+onMounted(() => {
+	getResult()
+});
 </script>
 
 <style lang="less" scoped>
@@ -145,7 +153,7 @@ onMounted(() => {});
 
   .search-content {
     width: 90%;
-    height: 100%;
+    height: 100vh;
     // overflow-y: scroll;
     margin: 0 auto;
   }

@@ -53,7 +53,9 @@ let goArticle = (id) => {
 };
 //去除文章内容的html标签
 const formatTitle = function (content) {
-  return content.replace(/<.*?>/g, "");
+	if(content){
+		return content.replace(/<.*?>/g, "");
+	}
 };
 //格式化日期
 const formatDate = function (t) {

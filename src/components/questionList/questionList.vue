@@ -1,17 +1,18 @@
 <template>
-	<view class="question_container">
-		<view class="question_item" v-for="(item,index) in 8" :key="index">
+		  <scroll-view class="question_container" scroll-y="true" @scrolltolower="toNextPage">
+	<!-- <view class="question_container"> -->
+		<view class="question_item" v-for="(item,index) in qtList" :key="index">
 			<view class="question_left">
 				<view class="title">
 					<view class="dot"></view>
 					<view class="text">
-						测试测试测试测试测试测试测试测试测试测试测试测试
+						{{item.title}}
 					</view>
 				</view>
 				<view class="difficulty">
 					<view class="text">难度:</view>
 					<view class="star">
-						<image v-for="(item,index) in 5" :key="index" src="../../static/assets/star.png" mode="aspectFill"></image>
+						<image v-for="(i,index) in item.level" :key="index" src="../../static/assets/star.png" mode="aspectFill"></image>
 					</view>
 				</view>
 				<view class="tags">
@@ -19,25 +20,42 @@
 						<view class="text">
 							标签：
 						</view>
-						<view class="tag" v-for="(item,index) in 3" :key="index">
-							Vue
+						<view class="tag" v-for="(tag,index) in item.tags" :key="index">
+							{{tag}}
 						</view>
 					</view>
 					<view class="tags_right">
-						<van-button plain type="primary" color="#20b427" round size="mini" @click="goTopicExercise()">练习</van-button>
+						<van-button plain type="primary" color="#20b427" round size="mini" @click="goTopicExercise(item)">练习</van-button>
 					</view>
 				</view>
 			</view>
 		</view>
-	</view>
+	<!-- </view> -->
+		  </scroll-view>
 </template>
 
 <script setup>
-const goTopicExercise = ()=>{
+import { onMounted } from 'vue';
+ const props = defineProps({
+	qtList: {
+	  type: Array,
+	  default: []
+	}
+  })
+const emit = defineEmits(['nextPage'])
+const goTopicExercise = (item)=>{
 	uni.navigateTo({
-		url:'/pages/topicExercise/topicExercise',
+		url:`/pages/topicExercise/topicExercise?id=${item._id}`,
 	})
 }
+
+function toNextPage() {
+  console.log("翻页了");
+  emit('nextPage')
+}
+onMounted(()=>{
+
+})
 </script>
 
 <style lang="less" scoped>
@@ -45,6 +63,7 @@ const goTopicExercise = ()=>{
 .question_container{
 	height: 100%;
 	width: 100%;
+	overflow-y: scroll;
 	.question_item{
 		width: 100%;
 		height: 180rpx;

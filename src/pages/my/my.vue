@@ -4,9 +4,9 @@
 		<view class="user">
 			<view class="user-container">
 				<view class="user-pic" @click="WXlogin">
-					<image src="../../static/logo.png" mode="aspectFill"></image>
+					<image :src="globalProperties.$baseURL +'/'+ avatar" mode="aspectFill"></image>
 				</view>
-				<view class="user-name">用户名</view>
+				<view class="user-name">{{username}}</view>
 			</view>
 		</view>
 		<!-- 签到、收藏、文章 -->
@@ -54,9 +54,20 @@
 
 <script setup>
 import { onLoad } from '@dcloudio/uni-app';
-import { onMounted } from 'vue';
+import { onMounted,computed } from 'vue';
 import {userLogin} from '../../api/index.js'
-import {  } from '@/api/index.js';
+import useGlobalProperties from '@/hooks/globalVar'
+import useUserStore from '../../store/user.js'
+const globalProperties = useGlobalProperties()
+const userStore = useUserStore()
+
+const username = computed(()=>{
+	return userStore.userInfo.username
+})
+const avatar = computed(()=>{
+	return userStore.userInfo.avatar
+})
+
 function WXlogin(){
 	uni.showLoading({
 	      title: '登录中...'
@@ -71,7 +82,7 @@ function WXlogin(){
 					const dataMsg = await userLogin(params)
 					const {code,data:{userInfo}} = dataMsg
 					if(code =='0000'){
-						console.log(userInfo);
+						userStore.updateUserInfo(userInfo)
 						uni.hideLoading();
 						uni.showToast({
 						      title: '登录成功',
@@ -123,7 +134,7 @@ const goMyArticle = ()=>{
 }
 
 onMounted(() => {
-	
+	console.log(username +'/'+ avatar);
 });
 
 	
@@ -142,11 +153,13 @@ onMounted(() => {
 		justify-content: center;
 		align-items: center;
 		.user-container {
+			align-item: center;
 			.user-pic {
 				width: 150rpx;
 				height: 150rpx;
 				border-radius: 50%;
 				overflow: hidden;
+				margin: 0 auto;
 				image {
 					width: 100%;
 					height: 100%;
