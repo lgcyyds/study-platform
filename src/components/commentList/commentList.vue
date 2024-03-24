@@ -4,19 +4,19 @@
 			<p>全部评论</p>
 		</view>
 		<view class="comment-items">
-			<view class="comment-item" v-for="(item,index) in 6" :key="index">
+			<view class="comment-item" v-for="(item,index) in commentList" :key="index">
 				<view class="img">
-					<image src="../../static/logo.png" mode="aspectFill"></image>
+					<image :src="globalProperties.$baseURL + item.userInfo[0].avatar" mode="aspectFill"></image>
 				</view>
 				<view class="comment-content">
 					<view class="user-nick">
-						用户名
+						{{item.userInfo[0].username}}
 					</view>
 					<view class="comment-text">
-						评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评
+						{{item.content}}
 					</view>
 					<view class="comment-other">
-						12小时前
+						{{userFormatTime(item.commentTime)}}
 					</view>
 				</view>
 			</view>
@@ -28,6 +28,16 @@
 </template>
 
 <script setup>
+import userFormatTime from "../../hooks/useFormatTime.js"
+import useGlobalProperties from '@/hooks/globalVar'
+const globalProperties = useGlobalProperties()
+const props = defineProps({
+	commentList:{
+		type: Array,
+		default: [],
+	}
+})
+
 </script>
 
 <style lang="less" scoped>

@@ -9,31 +9,42 @@
 			</view>
 			<image v-if="iconFlag" @click="changeBtn" class="icon" src="../../static/assets/commentErea.png" mode="aspectFill"></image>
 			<image v-else @click="changeBtn" class="icon" src="../../static/assets/top.png" mode="aspectFill"></image>
-			<image @click="changeCollect($event)" :class="['icon',isclickCollect?'icon-change':'']" :src="`../../static/assets/clickCollect${isCollect?'':'_on'}.png`" mode="aspectFill"></image>22
-			<image @click="changeLike($event)" :class="['icon',isclickLike?'icon-change':'']" :src="`../../static/assets/clickLike${isLike?'':'_on'}.png`" mode="aspectFill"></image>12
+			<image @click="changeCollect($event)" :class="['icon',isclickCollect?'icon-change':'']" :src="`../../static/assets/clickCollect${isCollect?'':'_on'}.png`" mode="aspectFill"></image>{{ArticleData.collected}}
+			<image @click="changeLike($event)" :class="['icon',isclickLike?'icon-change':'']" :src="`../../static/assets/clickLike${isLike?'':'_on'}.png`" mode="aspectFill"></image>{{ArticleData.liked}}
 		</view>
 	</view>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-	const emit = defineEmits(['changeComment','update:locationFlag','update:iconFlag'])
-	const props = defineProps(['locationFlag','iconFlag'])
+	const emit = defineEmits(['changeComment','update:locationFlag','update:iconFlag','clickCollectedOrLiked'])
+	const props = defineProps(['locationFlag','iconFlag','ArticleData'])
 	let isCollect = ref(true)
 	let isclickCollect = ref(false)
+	// 收藏和取消收藏
 	let changeCollect=(e)=>{
-		// 收藏和取消收藏
-		isclickCollect.value = true
-		isCollect.value = false
+		if(isCollect.value == true){//如果未收藏
+			isclickCollect.value = true
+			isCollect.value = false
+			emit('clickCollectedOrLiked',1)
+		}else{//如果已收藏
+			isclickCollect.value = false
+			isCollect.value = true
+		}
 	}
 	
 	
 	let isLike = ref(true)
 	let isclickLike = ref(false)
+	// 点赞和取消点赞
 	let changeLike=()=>{
-		// 点赞和取消点赞
-		isclickLike.value = true
-		isLike.value = false
+		if(isLike.value == true){//如果未点赞
+			isclickLike.value = true
+			isLike.value = false
+			emit('clickCollectedOrLiked',0)
+		}else{//如果已点赞
+			
+		}
 	}
 	
 	

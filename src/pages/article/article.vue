@@ -42,12 +42,12 @@
 			</view>
 			<!-- 全部评论 -->
 			<view class="article-comment" id="allComment">
-				<commentList/>
+				<commentList :commentList="articleCommentList"/>
 			</view>
 		</view>
 	</scroll-view>
 	<!-- 底部评论组件 -->
-	<comment v-if="commentType" v-model:locationFlag="locationFlag" v-model:iconFlag="iconFlag" @changeComment="switchCommentBox"></comment>
+	<comment v-if="commentType" v-model:locationFlag="locationFlag" v-model:iconFlag="iconFlag" @changeComment="switchCommentBox" :ArticleData='ArticleData' @clickCollectedOrLiked = "clickCollectedOrLiked"></comment>
 	<commentBox v-else @changeComment="getCommentContent"></commentBox>
 	<van-overlay :show="isShow" @click="onClickHide" />
 </template>
@@ -59,8 +59,11 @@ import commentBox from '@/components/commentBox/commentBox.vue'
 import { isBoolean } from 'lodash';
 import { onBeforeUnmount, ref, onMounted, getCurrentInstance, computed } from 'vue'
 import userFormatDate from "../../hooks/useFormatDate.js"
-import {getArticle} from '../../api/index.js'
+import {getArticle,getArticleCommentList,collectOrLikeArticle} from '../../api/index.js'
 import { onLoad } from '@dcloudio/uni-app';
+import useUserStore from '../../store/user.js'
+const userStore = useUserStore()
+
     // 内容 HTML
     const valueHtml = ref('')
 	const ArticleData = ref({})
@@ -128,8 +131,52 @@ import { onLoad } from '@dcloudio/uni-app';
 			console.log(e);
 		}
 	}
+	
+	let articleCommentList = ref([])
+	//获取文章评论
+	async function getArticleComment(id){
+		try{
+			let params = {
+				id:id
+			}
+			let dataMsg = await getArticleCommentList(params)
+			const {code,data} = dataMsg
+			if(code == "0000"){
+				articleCommentList.value.push(...data)
+			}
+		}catch(e){
+			//TODO handle the exception
+		}
+	}
+	
+	const userId = computed(()=>{
+		return userStore.userInfo._id
+	})
+	let articleId = ref(null)
+	//点赞和收藏文章
+	async function clickCollectedOrLiked(type){
+		console.log(type);
+		let form = {
+			userId:userId.value,
+			articleId:articleId.value,
+			type:type
+		}
+		try{
+			let dataMsg = await collectOrLikeArticle(form)
+			const {code,data} = dataMsg
+			if(code = '0000'){
+				console.log(data);
+			}
+		}catch(e){
+			//TODO handle the exception
+		}
+	}
+	
+	
 	onLoad((params)=>{
+		articleId = params.id
 		getArticleDetail(params.id)
+		getArticleComment(params.id)
 	})
 </script>
 

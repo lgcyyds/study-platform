@@ -4,7 +4,7 @@
 		<view class="user">
 			<view class="user-container">
 				<view class="user-pic" @click="WXlogin">
-					<image :src="globalProperties.$baseURL +'/'+ avatar" mode="aspectFill"></image>
+					<image :src="globalProperties.$baseURL + avatar" mode="aspectFill"></image>
 				</view>
 				<view class="user-name">{{username}}</view>
 			</view>

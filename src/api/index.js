@@ -11,9 +11,11 @@ export const addArticle = (data) => requests(({url:'/articles/add',method:'post'
 //获取文章（id, collected, liked, keywords, page）
 export const getArticle = (params) => requests(({url:'/articles/get',method:'get',params}))
 //收藏、点赞文章（userId, articleId, type）
-export const collectOrLikeArticle = (data) => requests(({url:'/articles/collectOrLike',method:'post',data}))
+export const collectOrLikeArticle = (form) => requests(({url:'/articles/collectOrLike',method:'post',data:form}))
 //评论文章(userId, articleId, content)
 export const commentArticle = (data) => requests(({url:'/articles/comment',method:'post',data}))
+//获取文章评论列表
+export const getArticleCommentList = (params) => requests(({url:'/articles/getComment',method:'get',params}))
 //获取点赞的文章(id)
 export const getLiked = (params) => requests(({url:'/articles/getliked',method:'get',params}))
 //获取收藏的文章和题目(id)
