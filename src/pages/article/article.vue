@@ -41,7 +41,7 @@
 				</view>
 			</view>
 			<!-- 全部评论 -->
-			<view class="article-comment" id="allComment">
+			<view class="article-comment" id="allComment" v-show="articleCommentList.length !== 0">
 				<commentList :commentList="articleCommentList"/>
 			</view>
 		</view>
@@ -59,7 +59,7 @@ import commentBox from '@/components/commentBox/commentBox.vue'
 import { isBoolean } from 'lodash';
 import { onBeforeUnmount, ref, onMounted, getCurrentInstance, computed } from 'vue'
 import userFormatDate from "../../hooks/useFormatDate.js"
-import {getArticle,getArticleCommentList,collectOrLikeArticle} from '../../api/index.js'
+import {getArticle,getArticleCommentList,collectOrLikeArticle,commentArticle} from '../../api/index.js'
 import { onLoad } from '@dcloudio/uni-app';
 import useUserStore from '../../store/user.js'
 const userStore = useUserStore()
@@ -111,15 +111,40 @@ const userStore = useUserStore()
 		isShow.value = false
 		commentType.value = true
 	}
+	
+	async function sendCommentMsg(content){
+		// userId, articleId, content
+		let form = {
+			userId:userId.value,
+			articleId,
+			content:content,
+		}
+		try{
+			let dataMsg = await commentArticle(form)
+			const {code ,data,message} = dataMsg
+			if(code == '0000'){
+				uni.showToast({
+				      title: message,
+				});
+				
+			}
+		}catch(e){
+			//TODO handle the exception
+		}
+	}
+	
 	const getCommentContent = (value)=>{
-			console.log(value);
+			sendCommentMsg(value)
+			getArticleComment()
+			isShow.value = false//切换评论组件
+			commentType.value = true
 	}
 	
 	//获取文章内容
-	async function getArticleDetail(id){
+	async function getArticleDetail(){
 		try{
 			let params={
-				id:id
+				id:articleId
 			}
 			let dataMsg = await getArticle(params)
 			const {code,data} = dataMsg
@@ -134,15 +159,15 @@ const userStore = useUserStore()
 	
 	let articleCommentList = ref([])
 	//获取文章评论
-	async function getArticleComment(id){
+	async function getArticleComment(){
 		try{
 			let params = {
-				id:id
+				id:articleId
 			}
 			let dataMsg = await getArticleCommentList(params)
 			const {code,data} = dataMsg
 			if(code == "0000"){
-				articleCommentList.value.push(...data)
+				articleCommentList.value = data
 			}
 		}catch(e){
 			//TODO handle the exception
@@ -150,21 +175,20 @@ const userStore = useUserStore()
 	}
 	
 	const userId = computed(()=>{
-		return userStore.userInfo._id
+		return userStore.userInfo.id
 	})
 	let articleId = ref(null)
 	//点赞和收藏文章
-	async function clickCollectedOrLiked(type){
-		console.log(type);
+	async function clickCollectedOrLiked(type){	
 		let form = {
 			userId:userId.value,
-			articleId:articleId.value,
-			type:type
+			articleId,
+			type:type,
 		}
 		try{
 			let dataMsg = await collectOrLikeArticle(form)
 			const {code,data} = dataMsg
-			if(code = '0000'){
+			if(code == '0000'){
 				console.log(data);
 			}
 		}catch(e){
@@ -175,8 +199,8 @@ const userStore = useUserStore()
 	
 	onLoad((params)=>{
 		articleId = params.id
-		getArticleDetail(params.id)
-		getArticleComment(params.id)
+		getArticleDetail()
+		getArticleComment()
 	})
 </script>
 

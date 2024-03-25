@@ -1,9 +1,10 @@
 import axios from "axios";
 import axiosAdapterUniapp from 'axios-adapter-uniapp'
+import {baseURL} from './baseUrl.js'
 //1、利用axios对象的方法create,去创建一个axios实例
 // 2、request就是axios，只不过稍微配置一下
 const requests = axios.create({
-    baseURL:'http://localhost:3000',
+    baseURL:baseURL,
 	adapter: axiosAdapterUniapp,
     timeout:5000
 })

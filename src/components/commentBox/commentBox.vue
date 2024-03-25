@@ -1,10 +1,10 @@
 <template>
 	<view class="comment_box">
 		<view class="comment_left">
-			<input class="comment_input" placeholder="输入评论" type="text" focus v-model="commentText" @input="changeCommentText"/>
+			<input class="comment_input" placeholder="输入评论" type="text" focus v-model="commentText"/>
 		</view>
 		<view class="comment_right">
-			<view class="send_btn">
+			<view class="send_btn" @click="changeCommentText">
 				发送
 			</view>
 		</view>
