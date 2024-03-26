@@ -52,7 +52,9 @@ const fail = (e)=>{
 
 const articleTitle = ref('')
 const submit = ()=>{
-	
+	uni.navigateBack({
+		delta: 1
+	});
 }
 //初始化title
 onLoad((options)=>{

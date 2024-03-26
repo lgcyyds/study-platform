@@ -87,6 +87,10 @@ function WXlogin(){
 						uni.showToast({
 						      title: '登录成功',
 						});
+					}else{
+						uni.showToast({
+						      title: '登录失败',
+						});
 					}
 				}catch(e){
 					console.log(e);

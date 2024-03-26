@@ -1,7 +1,7 @@
 <template>
 	<view class="my_article">
 		<view class="article_container">
-			<articleList :btnType='btnType'></articleList>
+			<articleList :btnType='btnType'  :articleMsgList="articleDataList"></articleList>
 		</view>
 		<uni-fab ref="fab" :pattern="pattern" :content="content" horizontal="right" vertical="bottom" direction="vertical" @trigger="trigger" @fabClick="fabClick"/>
 	</view>
@@ -9,8 +9,13 @@
 
 <script setup>
 import articleList from '@/components/articleList/articleList.vue';
-import { ref, toRaw } from 'vue';
-
+import { computed, onMounted, ref, toRaw } from 'vue';
+import {getArticle} from '../../api/index.js'
+import useUserStore from '../../store/user.js'
+const userStore = useUserStore()
+let userId = computed(()=>{
+	return userStore.userInfo.id
+})
 const pattern = ref({
 	color: '#7A7E83',
 	backgroundColor: '#fff',
@@ -69,6 +74,26 @@ const fabClick = ()=>{
 	})
 	btnType.value = ''
 }
+
+let articleDataList = ref([])
+
+async function getArticleList(){
+	let params = {
+		id:userId.value
+	}
+	try{
+		let dataMsg = await getArticle(params)
+		const {code, data} = dataMsg
+		if(code == '0000'){
+			articleDataList.value = data
+		}
+	}catch(e){
+		//TODO handle the exception
+	}
+}
+onMounted(()=>{
+	getArticleList()
+})
 </script>
 
 <style lang="less" scoped>
