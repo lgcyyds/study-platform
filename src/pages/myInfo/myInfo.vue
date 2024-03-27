@@ -38,6 +38,10 @@
 <script setup>
 import { onReady } from '@dcloudio/uni-app';
 import { ref } from 'vue';
+import useUserStore from '../../store/user.js'
+import useGlobalProperties from '@/hooks/globalVar'
+const globalProperties = useGlobalProperties()
+const userStore = useUserStore()
 const imageValue = ref([])
 const imageStyle = ref({
 	"height": 100,	// 边框高度
@@ -48,7 +52,7 @@ const imageStyle = ref({
 })
 
 const getAvatar = (e)=>{
-	// console.log(e.detail.avatarUrl);
+	console.log(e.detail.avatarUrl);
 	// const userImg = e.detail.avatarUrl
 	// imageValue.value.push(userImg)
 }
@@ -135,6 +139,7 @@ const submit=()=> {
 			height: 150rpx;
 			overflow: hidden;
 			background: rgba(194, 194, 194, 0.5);
+			padding: 0 0;
 			.avatar{
 				width: 150rpx;
 				height: 150rpx;

@@ -13,15 +13,15 @@
 		<view class="count">
 			<view class="count-sign">
 				<view class="count-text">签到天数</view>
-				<view class="count-num">1</view>
+				<view class="count-num">{{userOtherInfo.checkInCount}}</view>
 			</view>
 			<view class="count-collect" @click="goMyCollect">
 				<view class="count-text">收藏</view>
-				<view class="count-num">1</view>
+				<view class="count-num">{{userOtherInfo.collectCount}}</view>
 			</view>
 			<view class="count-article" @click="goMyArticle">
 				<view class="count-text">文章</view>
-				<view class="count-num">2</view>
+				<view class="count-num">{{userOtherInfo.myArticleCount}}</view>
 			</view>
 		</view>
 		<!-- 功能模块 -->
@@ -54,8 +54,8 @@
 
 <script setup>
 import { onLoad } from '@dcloudio/uni-app';
-import { onMounted,computed } from 'vue';
-import {userLogin} from '../../api/index.js'
+import { onMounted,computed, ref } from 'vue';
+import {userLogin,getUserOtherInfo} from '../../api/index.js'
 import useGlobalProperties from '@/hooks/globalVar'
 import useUserStore from '../../store/user.js'
 const globalProperties = useGlobalProperties()
@@ -137,10 +137,25 @@ const goMyArticle = ()=>{
 	})
 }
 
-onMounted(() => {
-	console.log(username +'/'+ avatar);
-});
+let userOtherInfo = ref({})
+async function getOtherInfo(){
+	let params={
+		id:userStore.userInfo.id
+	}
+	try{
+		let dataMsg = await getUserOtherInfo(params)
+		let {code,data} = dataMsg
+		if(code == '0000'){
+			userOtherInfo.value = data
+		}
+	}catch(e){
+		//TODO handle the exception
+	}
+}
 
+onMounted(() => {
+	getOtherInfo()
+});
 	
 
 

@@ -4,6 +4,8 @@ import requests from '../api/request.js'
 export const userLogin = (params) => requests({url: '/users/login', method: 'get', params })
 //签到
 export const userSignIn = (params) => requests({url: '/users/signin', method: 'post', params })
+//查询用户其他信息（签到天数、收藏数量、文章数量）
+export const getUserOtherInfo = (params) => requests({url: '/users/getOtherInfo', method: 'post', params })
 
 // <------------------------------------文章接口---------------------------------------->
 //新增文章(具体看后端)

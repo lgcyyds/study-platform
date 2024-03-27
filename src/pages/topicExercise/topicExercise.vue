@@ -50,7 +50,7 @@ const clickCollect = () =>{
 	clickActive.value = true
 }
 
-let questionMsg = ref(null)
+let questionMsg = ref({})
 async function getQuestionSearchList(id) {
   let params = {
     id
