@@ -1,5 +1,5 @@
 <template>
-		  <scroll-view class="question_container" scroll-y="true" @scrolltolower="toNextPage">
+	<scroll-view class="question_container" scroll-y="true" @scrolltolower="toNextPage">
 	<!-- <view class="question_container"> -->
 		<view class="question_item" v-for="(item,index) in qtList" :key="index">
 			<view class="question_left">
@@ -31,7 +31,7 @@
 			</view>
 		</view>
 	<!-- </view> -->
-		  </scroll-view>
+	</scroll-view>
 </template>
 
 <script setup>

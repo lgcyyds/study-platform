@@ -1,5 +1,6 @@
 <template>
-  <view class="container">
+  <!-- <view class="container"> -->
+<scroll-view class="container" scroll-y="true" @scrolltolower="toNextPage">
     <view
       class="article"
       v-for="(item, index) in articleMsgList"
@@ -31,11 +32,13 @@
         >
       </view>
     </view>
-  </view>
+</scroll-view>
+  <!-- </view> -->
 </template>
 
 <script setup>
 import { computed, ref } from "vue";
+const emit = defineEmits(['nextPage'])
 const props = defineProps({
   btnType: {
     type: String,
@@ -74,6 +77,11 @@ const formatDate = function (t) {
 const btnStyle = computed(() => {
   return props.btnType == "primary" ? { color: "#1AAD19" } : "";
 });
+
+function toNextPage() {
+  emit('nextPage')
+}
+
 </script>
 
 <style lang="less" scoped>

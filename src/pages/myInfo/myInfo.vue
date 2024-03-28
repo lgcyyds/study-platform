@@ -1,24 +1,20 @@
 <template>
 	<view class="info_container">
 		<view class="info_image">
-			<button class="avatar_btn" type="default" open-type="chooseAvatar" hover-class="none" @chooseavatar="getAvatar">
-				<!-- <uni-file-picker
-					class="imageUploader"
-					v-model="imageValue" 
-					fileMediatype="image" 
-					:limit="1"
-					:del-icon="false"
-					disable-preview
-					mode:grid
-					:image-styles="imageStyle"
-					@select="select" 
-					@progress="progress" 
-					@success="success" 
-					@fail="fail" 
-				/> -->
-				<!-- <uni-icons type="person-filled" size="30"></uni-icons> -->
-				<image class="avatar" src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2Fd059958d-19f7-46ce-b55b-bbb1928504f3%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1707639345&t=b373c5d56eb7df5f441cc5c42fd26971" mode="aspectFill"></image>
-			</button>
+			<uni-file-picker
+				class="imageUploader"
+				v-model="imageValue" 
+				fileMediatype="image" 
+				:limit="1"
+				:del-icon="false"
+				disable-preview
+				mode:grid
+				:image-styles="imageStyle"
+				@select="select" 
+				@progress="progress" 
+				@success="success" 
+				@fail="fail" 
+			/>
 		</view>
 		<view class="info_msg">
 			<!-- <uni-easyinput type="text" v-model="formData.name" placeholder="请输入姓名" /> -->
@@ -52,13 +48,13 @@ const imageStyle = ref({
 })
 
 const getAvatar = (e)=>{
-	console.log(e.detail.avatarUrl);
+	console.log(e.detail.avatarUrl,e);
 	// const userImg = e.detail.avatarUrl
 	// imageValue.value.push(userImg)
 }
 
 const formData = ref({
-		name: '',
+		name: userStore.userInfo.username,
 		email: ''
 	})
 // 获取上传状态
@@ -161,5 +157,16 @@ const submit=()=> {
 		margin: 0 auto;
 		height: 250rpx;
 	}
+}
+/deep/.uni-file-picker__container {
+    display: flex;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    justify-content: center;
+	border-radius: 0;
+}
+/deep/.file-picker__progress-item {
+    width: 100%;
+	display: none;
 }
 </style>
