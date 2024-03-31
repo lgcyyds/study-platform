@@ -25,7 +25,8 @@ let optionList = ref([
 let arrowClassName = ref('')
 let changeSort =()=>{
 	questionsList.value = []//重置
-	page.value = 1
+	stopNext.value = false//重置
+	page.value = 1//重置
 	if(arrowClassName.value == 'topic_arrow_down'){
 		//难度上升
 		arrowClassName.value=''
@@ -44,7 +45,9 @@ let changeSort =()=>{
 let page = ref(1);//页码
 let tag = ref('')
 let questionsList = ref([])
+let stopNext = ref(false)
 async function getQtList(){
+	if(stopNext.value) return
 	let params= {
 		page:page.value,
 		level:level.value,
@@ -58,7 +61,7 @@ async function getQtList(){
 			console.log(questionsList.value);
 			page.value++
 			if(data.length =='0'){
-				
+				stopNext.value = true
 			}
 		}
 	}catch(e){

@@ -37,5 +37,8 @@ export const getCommentArticleMsgList = (params) => requests(({url:'/articles/ge
 // <------------------------------------题目接口---------------------------------------->
 //获取题目(id, page, level, tag,keywords)
 export const getQuestion = (params) => requests(({url:'/question/get',method:'get',params}))
-//获取收藏题目(userId, questionId)
-export const getCollectQuestion = (data) => requests(({url:'/question/collect',method:'post',data}))
+//收藏题目
+export const collectQuestion = (data) => requests(({url:'/question/collect',method:'post',data}))
+//获取收藏状态
+export const getCollectStatus = (params) => requests(({url:'/question/getCollectStatus',method:'get',params}))
+

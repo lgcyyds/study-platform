@@ -6,7 +6,7 @@
 				单选题
 			</view>
 			<view class="collect_img">
-				<image @click="clickCollect" :class="['collect',clickActive?'collect_active':'']" :src="`../../static/assets/clickCollect${isCollected?'_on':''}.png`" mode="aspectFill"></image>
+				<image @click="clickCollect" :class="['collect',isCollected?'collect_active':'']" :src="`../../static/assets/clickCollect${isCollected?'_on':''}.png`" mode="aspectFill"></image>
 			</view>
 			<view class="topic_index">
 				<text>1</text>/150
@@ -40,36 +40,79 @@
 
 <script setup>
 import { onLoad } from '@dcloudio/uni-app';
-import { onMounted, ref } from 'vue';
-import {  getQuestion } from "@/api/index.js";
+import { computed, onMounted, ref } from 'vue';
+import {  getQuestion , getCollectStatus , collectQuestion} from "@/api/index.js";
+import useUserStore from '../../store/user.js'
+const userStore = useUserStore()
 
+const userId = computed(()=>{
+		return userStore.userInfo.id
+	})
 let isCollected = ref(false)
-const clickActive = ref(false)
 const clickCollect = () =>{
-	isCollected.value = true
-	clickActive.value = true
+	if(isCollected.value){
+		isCollected.value = false
+		
+	}else{
+		isCollected.value = true
+		
+	}
 }
-
+const questionId = ref(null)
 let questionMsg = ref({})
-async function getQuestionSearchList(id) {
+async function getQuestionSearchList() {
   let params = {
-    id
+    id:questionId.value
   };
   try {
     let resultMsg = await getQuestion(params);
     const { code, data } = resultMsg;
     if (code == "0000") {
       questionMsg.value = data[0];
-	  console.log(questionMsg.value);
     }
   } catch (e) {
     console.log(e);
   }
 }
+
+async function getColStatus(){
+	let params = {
+		id:userId.value,
+		questionId:questionId.value
+	}
+	try{
+		let dataMsg = await getCollectStatus(params)
+		const {code,data} = dataMsg
+	console.log(params);
+		if(code == '0000'){
+			if(data.code){
+				isCollected.value = true
+			}
+		}
+	}catch(e){
+		//TODO handle the exception
+	}
+}
+
+async function colQuestion(){
+	let data = {
+		userId:userId.value,
+		questionId:questionId.value
+	}
+	try{
+		const dataMsg = await collectQuestion()
+		const {code,data} = dataMsg
+		if(code = '0000'){
+			console.log(data);
+		}
+	}catch(e){
+		//TODO handle the exception
+	}
+}
 onLoad((params)=>{
-	console.log(params.id);//拿到题目id
-	
-	getQuestionSearchList(params.id)
+	questionId.value = params.id//拿到题目id
+	getQuestionSearchList()
+	getColStatus()
 })
 </script>
 
