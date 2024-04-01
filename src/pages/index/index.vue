@@ -9,7 +9,7 @@
 			</swiper>
 		</view>
 		<!-- 点击签到按钮 -->
-		<signBtn></signBtn>
+		<signBtn v-if="!signFlag" :signFlag="signFlag" @clickSign = "clickSign"></signBtn>
 		<view class="search_block" @click="goSearch">
 			<image src="../../static/assets/search.png" mode=""></image>
 			<view class="text">
@@ -34,8 +34,11 @@
 
 <script setup>
 import signBtn from '@/components/sign-btn/sign-btn.vue'
-import { onLoad } from '@dcloudio/uni-app';
+import { onLoad, onShow } from '@dcloudio/uni-app';
+import {getChenkInState,userSignIn} from '../../api/index.js'
 import { ref } from 'vue';
+import useUserStore from '../../store/user.js'
+const userStore = useUserStore()
 let banner = ref([
 	{
 		url: 'https://img1.baidu.com/it/u=507850114,3105556430&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500'
@@ -69,8 +72,38 @@ let goSearch=()=>{
 		url:'/pages/search/search'
 	})
 }
-onLoad(()=>{
+let signFlag = ref(false)
+async function checkSignState(){
+	let params = {
+		id:userStore.userInfo.id
+	}
+	try{
+		let dataMsg = await getChenkInState(params)
+		const {code,data} = dataMsg
+		if(code == '0000'){
+			signFlag.value = data.code
+		}
+	}catch(e){
+		//TODO handle the exception
+	}
+}
 
+async function clickSign(){
+	let params = {
+		id:userStore.userInfo.id
+	}
+	try{
+		let dataMsg = await userSignIn(params)
+		const {code,data} = dataMsg
+		if(code == '0000'){
+			console.log(data);
+		}
+	}catch(e){
+		//TODO handle the exception
+	}
+}
+onShow(()=>{
+	checkSignState()
 })
 </script>
 

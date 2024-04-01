@@ -6,7 +6,7 @@
 			<!-- v-on：事件类型="触发后的函数" 事件绑定 -->
 			<view ref='signShadow' class="circle"></view>
 			<view ref='signInner' class="sign-inner">
-				<view>立即签到</view>
+				<view>{{signWord}}</view>
 				<view class="time">00:00:00</view>
 			</view>
 		</view>
@@ -14,20 +14,33 @@
 </template>
 
 <script setup>
-import { getCurrentInstance, onMounted } from 'vue';
+import { onShow } from '@dcloudio/uni-app';
+import { computed, getCurrentInstance, onMounted } from 'vue';
 import { ref } from 'vue';
+const props = defineProps(['signFlag'])
+const emit = defineEmits(['clickSign'])
+import useUserStore from '../../store/user.js'
+const userStore = useUserStore()
 	let isSignInState = ref(false)//签到状态
 	let isSignIn = ref()//签到样式
+	let signWord = ref('立即签到')
 	//点击签到按钮
 	let status = ref('230rpx')
 	let signOn = ()=>{
+		if(!userStore.userInfo.username){
+			uni.showToast({
+			      title: '请先登录！',
+			});
+			return
+		}
+		emit('clickSign')
+		signWord.value = '签到成功'
 		setTimeout(function() {
 			status.value = '0rpx' 
 		}, 1000);
 	}
-	onMounted(()=>{
-		//根据签到状态初始化签到按钮
-		if(isSignInState.value){
+	onShow(()=>{
+		if(props.signFlag.value){
 			isSignIn.value = 'none'
 		}
 	})

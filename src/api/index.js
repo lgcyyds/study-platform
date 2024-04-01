@@ -6,6 +6,8 @@ export const userLogin = (params) => requests({url: '/users/login', method: 'get
 export const userSignIn = (params) => requests({url: '/users/signin', method: 'post', params })
 //查询用户其他信息（签到天数、收藏数量、文章数量）
 export const getUserOtherInfo = (params) => requests({url: '/users/getOtherInfo', method: 'post', params })
+//查询签到情况
+export const getChenkInState = (params) => requests({url: '/users/checkSignIn', method: 'get', params })
 
 // <------------------------------------文章接口---------------------------------------->
 //新增文章(具体看后端)
@@ -34,6 +36,11 @@ export const getLikeArticleMsgList = (params) => requests(({url:'/articles/getLi
 export const getcollectArticleMsgList = (params) => requests(({url:'/articles/getcollectArticleMsg',method:'get',params}))
 //获取评论我的文章的列表
 export const getCommentArticleMsgList = (params) => requests(({url:'/articles/getCommentArticleMsg',method:'get',params}))
+//获取文章的点赞和收藏状态
+export const getLikedAndCollectStatus = (params) => requests(({url:'/articles/getLikedAndCollectStatus',method:'get',params}))
+//获取文章作者信息
+export const getArticleAuthorInfo = (params) => requests(({url:'/articles/getAuthorInfo',method:'get',params}))
+
 // <------------------------------------题目接口---------------------------------------->
 //获取题目(id, page, level, tag,keywords)
 export const getQuestion = (params) => requests(({url:'/question/get',method:'get',params}))

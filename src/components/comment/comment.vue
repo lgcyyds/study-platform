@@ -16,9 +16,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { nextTick, onMounted, ref, watch } from 'vue';
 	const emit = defineEmits(['changeComment','update:locationFlag','update:iconFlag','clickCollectedOrLiked'])
-	const props = defineProps(['locationFlag','iconFlag','ArticleData'])
+	const props = defineProps(['locationFlag','iconFlag','ArticleData','status'])
 	let isCollect = ref(true)
 	// 收藏和取消收藏
 	let changeCollect=(e)=>{
@@ -55,6 +55,10 @@ import { ref } from 'vue';
 	const changeComment=()=>{
 		emit('changeComment')
 	}
+	onMounted(()=>{
+		isCollect.value = !props.status.collected
+		isLike.value = !props.status.liked
+	})
 </script>
 
 <style lang="less" scoped>

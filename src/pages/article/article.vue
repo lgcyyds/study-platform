@@ -8,17 +8,17 @@
 				<view class="article-author-info">
 					<view class="article-author-items">
 						<view class="article-author-img">
-							<image src="../../static/logo.png" mode="aspectFill"></image>
+							<image :src="globalProperties.$baseURL + authorInfo.avatar" mode="aspectFill"></image>
 						</view>
 						<view class="article-author-content">
 							<view class="article-author-text">
 								<view class="article-author-title">
-									用户名
+									{{authorInfo.username}}
 								</view>
 								<view class="article-author-action">
 									<image class="sign-icon" src="../../static/assets/signup1.png" mode="aspectFill"></image>
 									<view class="day">
-										签到23天
+										签到{{authorInfo.signCount}}天
 									</view>
 									<image class="view-icon" src="../../static/assets/view.png" mode="aspectFill"></image>
 									<view class="day">
@@ -47,8 +47,8 @@
 		</view>
 	</scroll-view>
 	<!-- 底部评论组件 -->
-	<comment v-if="commentType" v-model:locationFlag="locationFlag" v-model:iconFlag="iconFlag" @changeComment="switchCommentBox" :ArticleData='ArticleData' @clickCollectedOrLiked = "clickCollectedOrLiked"></comment>
-	<commentBox v-else @changeComment="getCommentContent"></commentBox>
+	<comment v-if="commentType && status" v-model:locationFlag="locationFlag" v-model:iconFlag="iconFlag" @changeComment="switchCommentBox" :ArticleData='ArticleData' :status='status' @clickCollectedOrLiked = "clickCollectedOrLiked"></comment>
+	<commentBox v-show="!commentType" @changeComment="getCommentContent"></commentBox>
 	<van-overlay :show="isShow" @click="onClickHide" />
 </template>
 
@@ -59,10 +59,12 @@ import commentBox from '@/components/commentBox/commentBox.vue'
 import { isBoolean } from 'lodash';
 import { onBeforeUnmount, ref, onMounted, getCurrentInstance, computed } from 'vue'
 import userFormatDate from "../../hooks/useFormatDate.js"
-import {getArticle,getArticleCommentList,collectOrLikeArticle,commentArticle} from '../../api/index.js'
+import {getArticle,getArticleCommentList,collectOrLikeArticle,commentArticle,getLikedAndCollectStatus,getArticleAuthorInfo} from '../../api/index.js'
 import { onLoad } from '@dcloudio/uni-app';
 import useUserStore from '../../store/user.js'
 const userStore = useUserStore()
+import useGlobalProperties from '@/hooks/globalVar'
+const globalProperties = useGlobalProperties()
 
     // 内容 HTML
     const valueHtml = ref('')
@@ -150,6 +152,7 @@ const userStore = useUserStore()
 			const {code,data} = dataMsg
 			if(code == "0000"){
 				ArticleData.value = data[0]
+				getAuthorInfo()
 			}
 		}catch(e){
 			//TODO handle the exception
@@ -190,17 +193,60 @@ const userStore = useUserStore()
 			const {code,data} = dataMsg
 			if(code == '0000'){
 				console.log(data);
+				if(data.message == '收藏成功'){
+					ArticleData.value.collected ++
+				}else if(data.message == '取消收藏成功'){
+					ArticleData.value.collected --
+				}else if(data.message == '点赞成功'){
+					ArticleData.value.liked ++
+				}else{
+					ArticleData.value.liked --
+				}
 			}
 		}catch(e){
 			//TODO handle the exception
 		}
 	}
 	
+	let status = ref(false)
+	//获取点赞和收藏状态
+	async function getlikedAndColState(){
+		let params = {
+			userId:userId.value,
+			articleId
+		}
+		try{
+			let dataMsg = await getLikedAndCollectStatus(params)
+			const {code,data} = dataMsg
+			if(code == '0000'){
+				status.value = data
+			}
+		}catch(e){
+			//TODO handle the exception
+		}
+	}
 	
+	let authorInfo = ref({})
+	async function getAuthorInfo(){
+		let params = {
+			id:ArticleData.value.author
+		}
+		try{
+			let dataMsg = await getArticleAuthorInfo(params)
+			const {code,data:{result,signCount}} = dataMsg
+			if(code == '0000'){
+				authorInfo.value = Object.assign(result,{signCount})
+				console.log(authorInfo.value);
+			}
+		}catch(e){
+			//TODO handle the exception
+		}
+	}
 	onLoad((params)=>{
 		articleId = params.id
 		getArticleDetail()
 		getArticleComment()
+		getlikedAndColState()
 	})
 </script>
 

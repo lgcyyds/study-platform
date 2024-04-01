@@ -6,7 +6,7 @@
 				单选题
 			</view>
 			<view class="collect_img">
-				<image @click="clickCollect" :class="['collect',isCollected?'collect_active':'']" :src="`../../static/assets/clickCollect${isCollected?'_on':''}.png`" mode="aspectFill"></image>
+				<image v-if="userId" @click="clickCollect" :class="['collect',isCollected?'collect_active':'']" :src="`../../static/assets/clickCollect${isCollected?'_on':''}.png`" mode="aspectFill"></image>
 			</view>
 			<view class="topic_index">
 				<text>1</text>/150
@@ -17,7 +17,7 @@
 				<view class="topic_text">
 					{{questionMsg.title}}
 				</view>
-				<view class="topic_option" v-for="(item,index) in questionMsg.options" :key="index">
+				<view class="topic_option" :class="[optionState[index]?(questionMsg.rightOption == index?'topic_option_green':'topic_option_red'):'']" v-for="(item,index) in questionMsg.options" :key="index" @click="selectAnswer(index)">
 					<view class="option_Word">
 						{{Object.keys(item)[0].toUpperCase()+'、'}}
 					</view>
@@ -52,11 +52,10 @@ let isCollected = ref(false)
 const clickCollect = () =>{
 	if(isCollected.value){
 		isCollected.value = false
-		
 	}else{
 		isCollected.value = true
-		
 	}
+	colQuestion()
 }
 const questionId = ref(null)
 let questionMsg = ref({})
@@ -95,18 +94,35 @@ async function getColStatus(){
 }
 
 async function colQuestion(){
-	let data = {
+	let idData = {
 		userId:userId.value,
 		questionId:questionId.value
 	}
+	console.log(idData);
 	try{
-		const dataMsg = await collectQuestion()
+		const dataMsg = await collectQuestion(idData)
 		const {code,data} = dataMsg
-		if(code = '0000'){
-			console.log(data);
+		if(code == '0000'){
+			uni.showToast({
+			      title: data.message,
+			});
 		}
 	}catch(e){
 		//TODO handle the exception
+	}
+}
+
+let activeIndex = ref(null)
+let optionState = ref([0,0,0,0])
+async function selectAnswer(index){
+	activeIndex.value = index
+	optionState.value[index] = 1
+	if(questionMsg.value.rightOption == index){
+		//答对
+		console.log('答对');
+	}else{
+		//答错
+		console.log('答错');
 	}
 }
 onLoad((params)=>{
@@ -188,9 +204,12 @@ body{
 				min-height: 80rpx;
 				background-color: #f1f1f1;
 				border-radius: 5px;
+				border: 1px solid #f1f1f1;
 				margin-top: 20rpx;
 				display: flex;
 				align-items: center;
+				box-sizing: border-box;
+				transition: all .5s;
 				.option_Word{
 					margin-left: 20rpx;
 				}
@@ -198,6 +217,14 @@ body{
 					margin-left: 20rpx;
 					margin: 10rpx 20rpx;
 				}
+			}
+			.topic_option_green{
+				// background-color: #20b427;
+				border: 1px solid #20b427;
+			}
+			.topic_option_red{
+				// background-color: red;
+				border: 1px solid red;
 			}
 			.topic_control{
 				width: 100%;

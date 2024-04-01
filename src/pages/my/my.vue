@@ -53,12 +53,12 @@
 </template>
 
 <script setup>
-import { onLoad } from '@dcloudio/uni-app';
+import { onLoad, onShow } from '@dcloudio/uni-app';
 import { onMounted,computed, ref } from 'vue';
 import {userLogin,getUserOtherInfo} from '../../api/index.js'
 import useGlobalProperties from '@/hooks/globalVar'
-import useUserStore from '../../store/user.js'
 const globalProperties = useGlobalProperties()
+import useUserStore from '../../store/user.js'
 const userStore = useUserStore()
 
 const username = computed(()=>{
@@ -87,6 +87,7 @@ function WXlogin(){
 						uni.showToast({
 						      title: '登录成功',
 						});
+						getOtherInfo()
 					}else{
 						uni.showToast({
 						      title: '登录失败',
@@ -98,10 +99,18 @@ function WXlogin(){
 				
 			} else {
 			  console.log('登录失败！' + res.errMsg)
+			  uni.hideLoading();
+			  uni.showToast({
+			        title: '登录失败',
+			  });
 			}
 		},
 		fail(res){
 			console.log(res);
+			uni.hideLoading();
+			uni.showToast({
+			      title: '登录失败',
+			});
 		}
 	})
 }
@@ -152,10 +161,9 @@ async function getOtherInfo(){
 		//TODO handle the exception
 	}
 }
-
-onMounted(() => {
+onShow(()=>{
 	getOtherInfo()
-});
+})
 	
 
 
