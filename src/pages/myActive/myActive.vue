@@ -22,7 +22,7 @@
 <script setup>
 import articleList from '@/components/articleList/articleList.vue'
 import questionList from '@/components/questionList/questionList.vue'
-import {getLiked , getAllCollect} from '../../api/index.js'
+import {getLiked , getAllCollect , getHistoryList} from '../../api/index.js'
 import { onLoad } from '@dcloudio/uni-app';
 import { computed, onMounted, ref } from 'vue';
 import useUserStore from '../../store/user.js'
@@ -66,6 +66,22 @@ async function getAllCollectList(){
 	}
 }
 
+async function getHistoryArticleList(){
+	const value = uni.getStorageSync('history');
+	let params = {
+		articleList:JSON.parse(value)
+	}
+	try{
+		let dataMsg = await getHistoryList(params)
+		const {code,data} = dataMsg
+		if(code == '0000'){
+			articleDataList.value = data
+		}
+	}catch(e){
+		//TODO handle the exception
+	}
+}
+
 //初始化顶部title
 onLoad((options)=>{
 	const {title} = options
@@ -76,7 +92,7 @@ onLoad((options)=>{
 		pageFlag.value = '0'
 		getAllCollectList()
 	}else{//阅读历史
-		
+		getHistoryArticleList()
 	}
 	uni.setNavigationBarTitle({
 		title:title

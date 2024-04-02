@@ -118,7 +118,7 @@ const globalProperties = useGlobalProperties()
 		// userId, articleId, content
 		let form = {
 			userId:userId.value,
-			articleId,
+			articleId:articleId.value,
 			content:content,
 		}
 		try{
@@ -146,7 +146,7 @@ const globalProperties = useGlobalProperties()
 	async function getArticleDetail(){
 		try{
 			let params={
-				id:articleId
+				id:articleId.value
 			}
 			let dataMsg = await getArticle(params)
 			const {code,data} = dataMsg
@@ -165,7 +165,7 @@ const globalProperties = useGlobalProperties()
 	async function getArticleComment(){
 		try{
 			let params = {
-				id:articleId
+				id:articleId.value
 			}
 			let dataMsg = await getArticleCommentList(params)
 			const {code,data} = dataMsg
@@ -185,7 +185,7 @@ const globalProperties = useGlobalProperties()
 	async function clickCollectedOrLiked(type){	
 		let form = {
 			userId:userId.value,
-			articleId,
+			articleId:articleId.value,
 			type:type,
 		}
 		try{
@@ -213,7 +213,7 @@ const globalProperties = useGlobalProperties()
 	async function getlikedAndColState(){
 		let params = {
 			userId:userId.value,
-			articleId
+			articleId:articleId.value
 		}
 		try{
 			let dataMsg = await getLikedAndCollectStatus(params)
@@ -242,8 +242,37 @@ const globalProperties = useGlobalProperties()
 			//TODO handle the exception
 		}
 	}
+	
+	let historyList = ref([])
+	function setMyHistory(){
+		try{
+			let historyString
+			const value = uni.getStorageSync('history');
+			if(!value){
+				historyString = '[]'
+			} else{
+				historyString = value
+			}
+			historyList.value = JSON.parse(historyString)
+			let flag = historyList.value.indexOf(articleId.value)
+			if(flag !== -1){//如果历史存在，就提前
+				historyList.value.splice(flag,1)
+				historyList.value.unshift(articleId.value)
+			}else{//如果不存在，就加在前面
+				historyList.value.unshift(articleId.value)
+				if(historyList.value.length > 10){
+					historyList.value.pop()
+				}
+			}
+			uni.setStorageSync('history', JSON.stringify(historyList.value));
+		}catch(e){
+			//TODO handle the exception
+		console.log(e);
+		}
+	}
 	onLoad((params)=>{
-		articleId = params.id
+		articleId.value = params.id
+		setMyHistory()
 		getArticleDetail()
 		getArticleComment()
 		getlikedAndColState()

@@ -37,7 +37,8 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { onShow } from "@dcloudio/uni-app";
+import { computed, ref} from "vue";
 const emit = defineEmits(['nextPage'])
 const props = defineProps({
   btnType: {
@@ -81,7 +82,6 @@ const btnStyle = computed(() => {
 function toNextPage() {
   emit('nextPage')
 }
-
 </script>
 
 <style lang="less" scoped>

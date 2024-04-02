@@ -4,9 +4,10 @@
 		<view class="user">
 			<view class="user-container">
 				<view class="user-pic" @click="WXlogin">
-					<image :src="globalProperties.$baseURL + avatar" mode="aspectFill"></image>
+					<image v-if="avatar" :src="globalProperties.$baseURL + avatar" mode="aspectFill"></image>
+					<image v-else src="../../static/assets/defaultImg.png" mode="aspectFill"></image>
 				</view>
-				<view class="user-name">{{username}}</view>
+				<view class="user-name">{{username||'请登录'}}</view>
 			</view>
 		</view>
 		<!-- 签到、收藏、文章 -->
@@ -69,6 +70,7 @@ const avatar = computed(()=>{
 })
 
 function WXlogin(){
+	if(username.value) return
 	uni.showLoading({
 	      title: '登录中...'
 	});

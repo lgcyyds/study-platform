@@ -7,7 +7,7 @@
 			<view ref='signShadow' class="circle"></view>
 			<view ref='signInner' class="sign-inner">
 				<view>{{signWord}}</view>
-				<view class="time">00:00:00</view>
+				<view class="time">{{formattedTime}}</view>
 			</view>
 		</view>
 	</view>
@@ -21,29 +21,35 @@ const props = defineProps(['signFlag'])
 const emit = defineEmits(['clickSign'])
 import useUserStore from '../../store/user.js'
 const userStore = useUserStore()
-	let isSignInState = ref(false)//签到状态
-	let isSignIn = ref()//签到样式
-	let signWord = ref('立即签到')
-	//点击签到按钮
-	let status = ref('230rpx')
-	let signOn = ()=>{
-		if(!userStore.userInfo.username){
-			uni.showToast({
-			      title: '请先登录！',
-			});
-			return
-		}
-		emit('clickSign')
-		signWord.value = '签到成功'
-		setTimeout(function() {
-			status.value = '0rpx' 
-		}, 1000);
+import useCurrentTime from '../../hooks/useCurrentTime.js'
+
+const {formattedTime} = useCurrentTime()
+
+let isSignInState = ref(false)//签到状态
+let isSignIn = ref()//签到样式
+let signWord = ref('立即签到')
+//点击签到按钮
+let status = ref('230rpx')
+let signOn = ()=>{
+	if(!userStore.userInfo.username){
+		uni.showToast({
+			  title: '请先登录！',
+			  icon:'error'
+		});
+		return
 	}
-	onShow(()=>{
-		if(props.signFlag.value){
-			isSignIn.value = 'none'
-		}
-	})
+	emit('clickSign')
+	signWord.value = '签到成功'
+	setTimeout(function() {
+		status.value = '0rpx' 
+	}, 1000);
+}
+
+onShow(()=>{
+	if(props.signFlag.value){
+		isSignIn.value = 'none'
+	}
+})
 </script>
 
 <style lang="less" scoped>
