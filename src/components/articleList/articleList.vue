@@ -23,6 +23,7 @@
             class="del_btn"
             plain="true"
             :style="btnStyle"
+			@click.stop="operate(props.btnType,item._id)"
           >
             {{ props.btnType == "warn" ? "删除" : "编辑" }}
           </button>
@@ -39,7 +40,7 @@
 <script setup>
 import { onShow } from "@dcloudio/uni-app";
 import { computed, ref} from "vue";
-const emit = defineEmits(['nextPage'])
+const emit = defineEmits(['nextPage','delArticle','editArticle'])
 const props = defineProps({
   btnType: {
     type: String,
@@ -78,6 +79,16 @@ const formatDate = function (t) {
 const btnStyle = computed(() => {
   return props.btnType == "primary" ? { color: "#1AAD19" } : "";
 });
+
+function operate(type,id){
+	if(type == 'primary'){
+		// 编辑文章
+		emit('editArticle',id)
+	}else{
+		//删除文章
+		emit('delArticle',id)
+	}
+}
 
 function toNextPage() {
   emit('nextPage')

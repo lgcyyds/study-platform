@@ -98,7 +98,6 @@ async function colQuestion(){
 		userId:userId.value,
 		questionId:questionId.value
 	}
-	console.log(idData);
 	try{
 		const dataMsg = await collectQuestion(idData)
 		const {code,data} = dataMsg

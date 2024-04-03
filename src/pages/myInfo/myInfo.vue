@@ -11,9 +11,7 @@
 				mode:grid
 				:image-styles="imageStyle"
 				@select="select" 
-				@progress="progress" 
 				@success="success" 
-				@fail="fail" 
 			/>
 		</view>
 		<view class="info_msg">
@@ -32,8 +30,8 @@
 </template>
 
 <script setup>
-import { onReady } from '@dcloudio/uni-app';
 import { ref } from 'vue';
+import {editUserInfo} from '../../api/index.js'
 import useUserStore from '../../store/user.js'
 import useGlobalProperties from '@/hooks/globalVar'
 const globalProperties = useGlobalProperties()
@@ -48,14 +46,14 @@ const imageStyle = ref({
 })
 
 const getAvatar = (e)=>{
-	console.log(e.detail.avatarUrl,e);
-	// const userImg = e.detail.avatarUrl
-	// imageValue.value.push(userImg)
+	imageValue.value.push({
+		
+	})
 }
 
 const formData = ref({
 		name: userStore.userInfo.username,
-		email: ''
+		email: userStore.userInfo.email
 	})
 // 获取上传状态
 const rules = ref({
@@ -89,29 +87,59 @@ const rules = ref({
 		],
 	}
 })
+let picTempFilePaths = ref(null)
 const select = (e)=>{
-	console.log('选择文件：',e)
+	const {tempFilePaths} = e;
+	//获取图片临时路径
+	picTempFilePaths=tempFilePaths[0]
 }
-// // 获取上传进度
-const progress = (e)=>{
-	console.log('上传进度：',e)
+// 上传成功
+const success=(e)=>{
+		console.log('上传成功')
+}
+async function postNewUserInfo(avatar){
+	let paramsMsg = {
+		id:userStore.userInfo.id,
+		username:formData.value.name,
+		avatar,
+		email:formData.value.email
+	}
+	try{
+		let dataMsg = await editUserInfo(paramsMsg)
+		const {code,data} = dataMsg
+		if(code == '0000'){
+			userStore.updateUserInfo(paramsMsg)
+			uni.navigateBack({
+				success(){
+					uni.showToast({
+					  title: data.message,
+					});
+				}
+			}) 
+		}
+	}catch(e){
+		//TODO handle the exception
+	}
 }
 
-// // 上传成功
-const success = (e)=>{
-	console.log('上传成功')
-}
-// // 上传失败
-const fail = (e)=>{
-	console.log('上传失败：',e)
-}
 const form = ref(null)
-onReady(()=>{
-	
-})
 const submit=()=> {
 	form.value.validate().then(res=>{
-			console.log('表单数据信息：', res);
+			uni.uploadFile({
+			  //图片上传地址
+			  url: 'http://127.0.0.1:3000/users/uploadAvatar', 
+			  filePath: picTempFilePaths,
+			  //上传名字，注意与后台接收的参数名一致
+			  name: 'pic',
+			  //设置请求头
+			  header:{"Content-Type": "multipart/form-data"},
+			  //请求成功，后台返回自己服务器上的图片地址
+			  success: (uploadFileRes) => {
+				//处理数据
+				const path=JSON.parse(uploadFileRes.data)
+				postNewUserInfo(path.data.filename)
+			  }
+			});
 		}).catch(err =>{
 			console.log('表单错误信息：', err);
 		})

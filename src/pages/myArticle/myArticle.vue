@@ -1,7 +1,7 @@
 <template>
 	<view class="my_article">
 		<view class="article_container">
-			<articleList :btnType='btnType'  :articleMsgList="articleDataList"></articleList>
+			<articleList :btnType='btnType'  :articleMsgList="articleDataList" @editArticle='editArticle' @delArticle='delArticle'></articleList>
 		</view>
 		<uni-fab ref="fab" :pattern="pattern" :content="content" horizontal="right" vertical="bottom" direction="vertical" @trigger="trigger" @fabClick="fabClick"/>
 	</view>
@@ -91,6 +91,16 @@ async function getArticleList(){
 		//TODO handle the exception
 	}
 }
+
+const delArticle = (id)=>{
+	console.log(id);
+}
+const editArticle = (id)=>{
+	uni.navigateTo({
+	  url: `/pages/articleWritePage/articleWritePage?id=${id}&&title=编辑文章`,
+	});
+}
+
 onMounted(()=>{
 	getArticleList()
 })

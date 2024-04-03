@@ -8,7 +8,8 @@ export const userSignIn = (params) => requests({url: '/users/signin', method: 'p
 export const getUserOtherInfo = (params) => requests({url: '/users/getOtherInfo', method: 'post', params })
 //查询签到情况
 export const getChenkInState = (params) => requests({url: '/users/checkSignIn', method: 'get', params })
-
+//修改用户信息
+export const editUserInfo = (data) => requests({url: '/users/editUserInfo', method: 'post', data })
 // <------------------------------------文章接口---------------------------------------->
 //新增文章(具体看后端)
 export const addArticle = (data) => requests(({url:'/articles/add',method:'post',data}))

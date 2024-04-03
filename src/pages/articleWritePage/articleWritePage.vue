@@ -8,15 +8,12 @@
 				limit="1"
 				:image-styles="uploaderStyle"
 				@select="select" 
-				@progress="progress" 
-				@success="success" 
-				@fail="fail" 
 			/>
 		</view>
 		<view class="input_content">	
-		<uni-easyinput type="text" v-model="articleTitle" placeholder="请输入文章标题" maxlength="15"/>
+			<uni-easyinput type="text" v-model="articleInfo.articleTitle" placeholder="请输入文章标题" maxlength="15"/>
 			<view class="uni-textarea">
-				<myEditor></myEditor>
+				<myEditor :arrticleContent='articleInfo.arrticleContent' v-if="articleInfo.arrticleContent"></myEditor>
 			</view>
 			<button class="sub-btn" type="primary" @click="submit">发布</button>
 		</view>
@@ -27,7 +24,7 @@
 import { onLoad } from '@dcloudio/uni-app';
 import { reactive, ref } from 'vue';
 import myEditor from '@/components/myEditor/myEditor.vue'
-
+import {getArticle} from '../../api/index.js'
 const imageValue = ref([])
 const uploaderStyle = ref({
 	"height": 100,	// 边框高度
@@ -37,18 +34,6 @@ const uploaderStyle = ref({
 const select = (e)=>{
 	console.log('选择文件：',e)
 }
-// 获取上传进度
-const progress = (e)=>{
-	console.log('上传进度：',e)
-}
-// 上传成功
-const success = (e)=>{
-	console.log('上传成功')
-}
-// 上传失败
-const fail = (e)=>{
-	console.log('上传失败：',e)
-}
 
 const articleTitle = ref('')
 const submit = ()=>{
@@ -56,9 +41,35 @@ const submit = ()=>{
 		delta: 1
 	});
 }
+let articleInfo = ref({
+	cover:'',
+	articleTitle:'',
+	arrticleContent:''
+})
+async function getArticleContent(){
+	let params = {
+		id:articleId.value
+	}
+	try{
+		let dataMsg = await getArticle(params)
+		const {code,data} = dataMsg
+		if(code =='0000'){
+			articleInfo.value.cover = data[0].cover
+			articleInfo.value.articleTitle = data[0].title
+			articleInfo.value.arrticleContent = data[0].content
+		}
+	}catch(e){
+		//TODO handle the exception
+		console.log(e);
+	}
+}
+
+let articleId = ref(null)
 //初始化title
 onLoad((options)=>{
-	const {title} = options
+	const {title , id} = options
+	articleId.value = id
+	getArticleContent()
 	uni.setNavigationBarTitle({
 		title:title
 	})

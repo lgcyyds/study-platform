@@ -7,6 +7,7 @@
 <script>
     import piaoyiEditor from '@/uni_modules/piaoyi-editor/components/piaoyi-editor/piaoyi-editor.vue';
     export default {
+		props:['arrticleContent'],
         data() {
             return {
                 readOnly: false, //是否只读
@@ -14,7 +15,7 @@
                 api: '/upload', //上传图片接口地址
                 txt: '',
                 name: 'file',
-                values: '<div>11111222</div>'
+                values: this.arrticleContent
             };
         },
         components: {
